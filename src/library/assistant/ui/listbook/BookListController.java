@@ -59,19 +59,20 @@ public class BookListController implements Initializable {
         try {
             while (rs.next()) {
                 String titlex = rs.getString("title");
-                String author = rs.getString("title");
-                String id = rs.getString("title");
-                String publisher = rs.getString("title");
+                String author = rs.getString("author");
+                String id = rs.getString("id");
+                String publisher = rs.getString("publisher");
                 Boolean avail = rs.getBoolean("isAvail");
                
-                Book book = new Book(titlex, id, author, publisher, avail);
-                list.add(book);
+                list.add(new Book(titlex, id, author, publisher, avail));
+               
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         tableView.getItems().setAll(list);
+        
     }
 
     public static class Book {

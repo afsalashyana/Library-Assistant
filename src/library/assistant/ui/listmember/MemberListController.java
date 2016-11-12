@@ -45,28 +45,28 @@ public class MemberListController implements Initializable {
         mobileCol.setCellValueFactory(new PropertyValueFactory<>("mobile"));
         emailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
     }
-
-    private void loadData() {
+    
+        private void loadData() {
         DatabaseHandler handler = new DatabaseHandler();
         String qu = "SELECT * FROM MEMBER";
         ResultSet rs = handler.execQuery(qu);
         try {
             while (rs.next()) {
-                String titlex = rs.getString("title");
-                String author = rs.getString("title");
-                String id = rs.getString("title");
-                String publisher = rs.getString("title");
-                Boolean avail = rs.getBoolean("isAvail");
-
-                BookListController.Book book = new BookListController.Book(titlex, id, author, publisher, avail);
-                list.add(book);
+                String name = rs.getString("name");
+                String mobile = rs.getString("mobile");
+                String id = rs.getString("id");
+                String email = rs.getString("email");
+               
+                list.add(new Member(name, id, mobile, email));
+               
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         tableView.getItems().setAll(list);
     }
+
 
     public static class Member {
 
