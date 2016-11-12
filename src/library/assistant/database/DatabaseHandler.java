@@ -19,6 +19,7 @@ public final class DatabaseHandler {
     public DatabaseHandler() {
         createConnection();
         setupBookTable();
+        setupMemberTable();
     }
 
     void createConnection() {
@@ -47,6 +48,29 @@ public final class DatabaseHandler {
                         + "	author varchar(200),\n"
                         + "	publisher varchar(100),\n"
                         + "	isAvail boolean default true"
+                        + " )");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage() + " --- setupDatabase");
+        } finally {
+        }
+    }
+    void setupMemberTable() {
+        String TABLE_NAME = "MEMBER";
+        try {
+            stmt = conn.createStatement();
+
+            DatabaseMetaData dbm = conn.getMetaData();
+            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
+
+            if (tables.next()) {
+                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
+            } else {
+                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
+                        + "	id varchar(200) primary key,\n"
+                        + "	name varchar(200),\n"
+                        + "	mobile varchar(20),\n"
+                        + "	email varchar(100)\n"
                         + " )");
             }
         } catch (SQLException e) {
