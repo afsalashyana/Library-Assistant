@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
 
-public class FXMLDocumentController implements Initializable {
+public class BookAddController implements Initializable {
 
     @FXML
     private JFXTextField title;
@@ -38,8 +38,6 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         databaseHandler = new DatabaseHandler();
-        
-        checkData();
     }
 
     @FXML
@@ -94,7 +92,7 @@ public class FXMLDocumentController implements Initializable {
                 System.out.println(titlex);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
