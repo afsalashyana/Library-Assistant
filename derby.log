@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sat Nov 12 12:34:33 IST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0158-575a-1ebf-000005e3b9d0 
+on database directory /home/villan/Library Assistant/database with class loader sun.misc.Launcher$AppClassLoader@55f96302 
+Loaded from file:/home/villan/Library%20Assistant/dist/run1324285790/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_102-b14
+user.dir=/home/villan/Library Assistant
+os.name=Linux
+os.arch=amd64
+os.version=4.4.0-21-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
