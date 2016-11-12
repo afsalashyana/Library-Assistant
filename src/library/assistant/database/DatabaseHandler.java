@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 public final class DatabaseHandler {
 
@@ -19,8 +20,6 @@ public final class DatabaseHandler {
         createConnection();
         setupBookTable();
     }
-    
-    
 
     void createConnection() {
         try {
@@ -30,15 +29,15 @@ public final class DatabaseHandler {
             e.printStackTrace();
         }
     }
-    
-      void setupBookTable() {
+
+    void setupBookTable() {
         String TABLE_NAME = "BOOK";
         try {
             stmt = conn.createStatement();
-            
+
             DatabaseMetaData dbm = conn.getMetaData();
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
-            
+
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
             } else {
@@ -52,6 +51,33 @@ public final class DatabaseHandler {
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage() + " --- setupDatabase");
+        } finally {
+        }
+    }
+
+    public ResultSet execQuery(String query) {
+        ResultSet result;
+        try {
+            stmt = conn.createStatement();
+            result = stmt.executeQuery(query);
+        } catch (SQLException ex) {
+            System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
+            return null;
+        } finally {
+        }
+        return result;
+    }
+
+    
+    public boolean execAction(String qu) {
+        try {
+            stmt = conn.createStatement();
+            stmt.execute(qu);
+            return true;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error:" + ex.getMessage(), "Error Occured", JOptionPane.ERROR_MESSAGE);
+            System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
+            return false;
         } finally {
         }
     }
