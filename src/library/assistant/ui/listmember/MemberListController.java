@@ -16,7 +16,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.addbook.BookAddController;
-import library.assistant.ui.listbook.BookListController;
 
 public class MemberListController implements Initializable {
 
@@ -47,7 +46,7 @@ public class MemberListController implements Initializable {
     }
     
         private void loadData() {
-        DatabaseHandler handler = new DatabaseHandler();
+        DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM MEMBER";
         ResultSet rs = handler.execQuery(qu);
         try {
