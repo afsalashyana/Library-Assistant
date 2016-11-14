@@ -217,7 +217,7 @@
                                                 </ImageView>
                                              </graphic>
                                           </JFXButton>
-                                          <JFXButton styleClass="setup-button" stylesheets="@main.css" text="Submission">
+                                          <JFXButton onAction="#loadSubmissionOp" styleClass="setup-button" stylesheets="@main.css" text="Submission">
                                              <HBox.margin>
                                                 <Insets right="20.0" />
                                              </HBox.margin>
