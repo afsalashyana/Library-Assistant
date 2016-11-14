@@ -139,7 +139,7 @@
                                     </HBox>
                                     <HBox fx:id="member_info" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="1000.0" style="-fx-background-color: #e7e7e7;">
                                        <children>
-                                          <TextField fx:id="memberIDInput" onAction="#loadMemberInfo" promptText="Enter Member ID">
+                                          <TextField fx:id="memberIDInput" onAction="#loadMemberInfo" promptText="Member ID">
                                              <HBox.margin>
                                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                              </HBox.margin>
@@ -168,9 +168,9 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton styleClass="setup-button" stylesheets="@main.css" text="Issue">
+                                          <JFXButton disable="true" onAction="#loadIssueOperation" styleClass="setup-button" stylesheets="@main.css" text="Issue">
                                              <graphic>
-                                                <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="issueButton" fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../icons/issue.png" />
                                                    </image>
