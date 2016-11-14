@@ -18,6 +18,7 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.show();
+        stage.setTitle("Library Assistant X");
 
         new Thread(() -> {
             DatabaseHandler.getInstance();

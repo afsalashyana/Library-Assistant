@@ -168,7 +168,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton disable="true" onAction="#loadIssueOperation" styleClass="setup-button" stylesheets="@main.css" text="Issue">
+                                          <JFXButton onAction="#loadIssueOperation" styleClass="setup-button" stylesheets="@main.css" text="Issue">
                                              <graphic>
                                                 <ImageView fx:id="issueButton" fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -189,17 +189,17 @@
                            <children>
                               <BorderPane layoutX="251.0" layoutY="71.0" prefHeight="412.0" prefWidth="557.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <top>
-                                    <JFXTextField labelFloat="true" maxWidth="274.0" minWidth="274.0" prefHeight="32.0" prefWidth="274.0" promptText="Enter BOOK ID" BorderPane.alignment="CENTER">
+                                    <JFXTextField fx:id="bookID" labelFloat="true" maxWidth="274.0" minWidth="274.0" onAction="#loadBookInfo2" prefHeight="32.0" prefWidth="274.0" promptText="Enter BOOK ID" BorderPane.alignment="CENTER">
                                        <BorderPane.margin>
-                                          <Insets top="10.0" />
+                                          <Insets top="20.0" />
                                        </BorderPane.margin>
                                     </JFXTextField>
                                  </top>
                                  <center>
-                                    <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                       <padding>
-                                          <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                                       </padding>
+                                    <ListView fx:id="issueDataList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <BorderPane.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </BorderPane.margin>
                                     </ListView>
                                  </center>
                                  <bottom>

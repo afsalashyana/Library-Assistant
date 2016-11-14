@@ -1,14 +1,19 @@
 package library.assistant.ui.main;
 
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Observable;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +22,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -46,6 +53,12 @@ public class MainController implements Initializable {
     private Text memberName;
     @FXML
     private Text memberMobile;
+    @FXML
+    private ImageView issueButton;
+    @FXML
+    private JFXTextField bookID;
+    @FXML
+    private ListView<String> issueDataList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -197,5 +210,49 @@ public class MainController implements Initializable {
             alert1.setContentText("Issue Operation cancelled");
             alert1.showAndWait();
         }
+    }
+
+    @FXML
+    private void loadBookInfo2(ActionEvent event) {
+        ObservableList<String> issueData = FXCollections.observableArrayList();
+
+        String id = bookID.getText();
+        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + id + "'";
+        ResultSet rs = databaseHandler.execQuery(qu);
+        try {
+            while (rs.next()) {
+                String mBookID = id;
+                String mMemberID = rs.getString("memberID");
+                Timestamp mIssueTime = rs.getTimestamp("issueTime");
+                int mRenewCount = rs.getInt("renew_count");
+
+                issueData.add("Issue Date and Time :" + mIssueTime.toGMTString());
+                issueData.add("Renew Count :" + mRenewCount);
+
+                issueData.add("Book Information:-");
+                qu = "SELECT * FROM BOOK WHERE ID = '" + mBookID + "'";
+                ResultSet r1 = databaseHandler.execQuery(qu);
+                
+                while (r1.next()) {
+                    issueData.add("\tBook Name :" + r1.getString("title"));
+                    issueData.add("\tBook ID :" + r1.getString("id"));
+                    issueData.add("\tBook Author :" + r1.getString("author"));
+                    issueData.add("\tBook Publisher :" + r1.getString("publisher"));
+                }
+                qu = "SELECT * FROM MEMBER WHERE ID = '" + mMemberID + "'";
+                r1 = databaseHandler.execQuery(qu);
+                issueData.add("Member Information:-");
+                
+                while (r1.next()) {
+                    issueData.add("\tName :" + r1.getString("name"));
+                    issueData.add("\tMobile :" + r1.getString("mobile"));
+                    issueData.add("\tEmail :" + r1.getString("email"));
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        issueDataList.getItems().setAll(issueData);
     }
 }
