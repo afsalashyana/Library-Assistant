@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="256.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.addbook.BookAddController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="246.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.addbook.BookAddController">
    <children>
       <VBox prefHeight="256.0" prefWidth="404.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,17 +18,17 @@
             </JFXTextField>
             <JFXTextField fx:id="id" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Book ID">
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
             <JFXTextField fx:id="author" labelFloat="true" layoutX="20.0" layoutY="30.0" promptText="Book Author">
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
             <JFXTextField fx:id="publisher" labelFloat="true" layoutX="10.0" layoutY="62.0" promptText="Publisher">
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="10.0" right="10.0" top="20.0" />
                </VBox.margin>
             </JFXTextField>
             <HBox prefHeight="47.0" prefWidth="404.0">
@@ -36,6 +36,9 @@
                   <JFXButton fx:id="saveButton" onAction="#addBook" prefHeight="66.0" prefWidth="250.0" stylesheets="@addbook.css" text="Save" />
                   <JFXButton fx:id="cancelButton" layoutX="10.0" layoutY="10.0" onAction="#cancel" prefHeight="66.0" prefWidth="250.0" stylesheets="@addbook.css" text="Cancel" />
                </children>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

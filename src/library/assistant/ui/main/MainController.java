@@ -45,8 +45,6 @@ public class MainController implements Initializable {
     private Text bookAuthor;
     @FXML
     private Text bookStatus;
-
-    DatabaseHandler databaseHandler;
     @FXML
     private TextField memberIDInput;
     @FXML
@@ -61,6 +59,7 @@ public class MainController implements Initializable {
     private ListView<String> issueDataList;
 
     Boolean isReadyForSubmission = false;
+    DatabaseHandler databaseHandler;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
