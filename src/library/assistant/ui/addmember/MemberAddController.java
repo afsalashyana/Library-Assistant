@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
 
 public class MemberAddController implements Initializable {
@@ -45,18 +46,9 @@ public class MemberAddController implements Initializable {
 
         Boolean flag = mName.isEmpty() || mID.isEmpty() || mMobile.isEmpty() || mEmail.isEmpty();
         if (flag) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Please Enter in all fields");
-            alert.showAndWait();
+            AlertMaker.showErrorMessage("Cant add member", "Please Enter in all fields");
             return;
         }
-//         stmt.execute("CREATE TABLE " + TABLE_NAME + "("
-//                        + "	id varchar(200) primary key,\n"
-//                        + "	name varchar(200),\n"
-//                        + "	mobile varchar(20),\n"
-//                        + "	email varchar(100)\n"
-//                        + " )");
         String st = "INSERT INTO MEMBER VALUES ("
                 + "'" + mID + "',"
                 + "'" + mName + "',"
@@ -65,15 +57,9 @@ public class MemberAddController implements Initializable {
                 + ")";
         System.out.println(st);
         if (handler.execAction(st)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Saved");
-            alert.showAndWait();
+            AlertMaker.showSimpleAlert("Member Added", "Saved");
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(null);
-            alert.setContentText("Error Occured");
-            alert.showAndWait();
+            AlertMaker.showErrorMessage("Member cant be added", "Error Occured");
         }
     }
 

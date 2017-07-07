@@ -1,4 +1,4 @@
-package library.assistant.ui.main;
+package library.assistant.settings;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -8,17 +8,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
 
-public class Main extends Application {
+public class SettingsLoader extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/library/assistant/ui/login/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/library/assistant/settings/settings.fxml"));
 
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Library Assistant Login");
+        stage.setTitle("Settings");
 
         new Thread(() -> {
             DatabaseHandler.getInstance();

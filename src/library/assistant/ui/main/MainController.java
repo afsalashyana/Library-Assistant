@@ -26,6 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,8 +46,6 @@ public class MainController implements Initializable {
     private Text bookAuthor;
     @FXML
     private Text bookStatus;
-
-    DatabaseHandler databaseHandler;
     @FXML
     private TextField memberIDInput;
     @FXML
@@ -61,6 +60,9 @@ public class MainController implements Initializable {
     private ListView<String> issueDataList;
 
     Boolean isReadyForSubmission = false;
+    DatabaseHandler databaseHandler;
+    @FXML
+    private StackPane rootPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -88,7 +90,11 @@ public class MainController implements Initializable {
     @FXML
     private void loadBookTable(ActionEvent event) {
         loadWindow("/library/assistant/ui/listbook/book_list.fxml", "Book List");
+    }
 
+    @FXML
+    private void loadSettings(ActionEvent event) {
+        loadWindow("/library/assistant/settings/settings.fxml", "Settings");
     }
 
     void loadWindow(String loc, String title) {
@@ -345,5 +351,35 @@ public class MainController implements Initializable {
             alert1.setContentText("Renew Operation cancelled");
             alert1.showAndWait();
         }
+    }
+
+    @FXML
+    private void handleMenuClose(ActionEvent event) {
+        ((Stage) rootPane.getScene().getWindow()).close();
+    }
+
+    @FXML
+    private void handleMenuAddBook(ActionEvent event) {
+        loadWindow("/library/assistant/ui/addbook/add_book.fxml", "Add New Book");
+    }
+
+    @FXML
+    private void handleMenuAddMember(ActionEvent event) {
+        loadWindow("/library/assistant/ui/addmember/member_add.fxml", "Add New Member");
+    }
+
+    @FXML
+    private void handleMenuViewBook(ActionEvent event) {
+        loadWindow("/library/assistant/ui/listbook/book_list.fxml", "Book List");
+    }
+
+    private void handleMenuViewMember(ActionEvent event) {
+        loadWindow("/library/assistant/ui/listmember/member_list.fxml", "Member List");
+    }    
+
+    @FXML
+    private void handleMenuFullScreen(ActionEvent event) {
+        Stage stage = ((Stage) rootPane.getScene().getWindow());
+        stage.setFullScreen(!stage.isFullScreen());
     }
 }

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 public final class DatabaseHandler {
 
-    private static DatabaseHandler handler=null;
+    private static DatabaseHandler handler = null;
 
     private static final String DB_URL = "jdbc:derby:database;create=true";
     private static Connection conn = null;
@@ -22,23 +22,21 @@ public final class DatabaseHandler {
         setupMemberTable();
         setupIssueTable();
     }
-    
-    public static DatabaseHandler getInstance()
-    {
-        if(handler==null)
-        {
+
+    public static DatabaseHandler getInstance() {
+        if (handler == null) {
             handler = new DatabaseHandler();
         }
         return handler;
     }
-    
 
     void createConnection() {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             conn = DriverManager.getConnection(DB_URL);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Cant load database", "Database Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
 
@@ -66,6 +64,7 @@ public final class DatabaseHandler {
         } finally {
         }
     }
+
     void setupMemberTable() {
         String TABLE_NAME = "MEMBER";
         try {
@@ -89,19 +88,18 @@ public final class DatabaseHandler {
         } finally {
         }
     }
-    
-      void setupIssueTable() {
+
+    void setupIssueTable() {
         String TABLE_NAME = "ISSUE";
         try {
-            
+
             stmt = conn.createStatement();
             DatabaseMetaData dbm = conn.getMetaData();
-            
+
             ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
             if (tables.next()) {
                 System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
-            } 
-            else {
+            } else {
                 stmt.execute("CREATE TABLE " + TABLE_NAME + "("
                         + "     bookID varchar(200) primary key,\n"
                         + "	memberID varchar(200),\n"
@@ -130,7 +128,6 @@ public final class DatabaseHandler {
         return result;
     }
 
-    
     public boolean execAction(String qu) {
         try {
             stmt = conn.createStatement();
