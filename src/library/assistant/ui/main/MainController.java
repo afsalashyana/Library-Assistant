@@ -87,7 +87,11 @@ public class MainController implements Initializable {
     @FXML
     private void loadBookTable(ActionEvent event) {
         loadWindow("/library/assistant/ui/listbook/book_list.fxml", "Book List");
+    }
 
+    @FXML
+    private void loadSettings(ActionEvent event) {
+        loadWindow("/library/assistant/settings/settings.fxml", "Settings");
     }
 
     void loadWindow(String loc, String title) {
@@ -345,4 +349,5 @@ public class MainController implements Initializable {
             alert1.showAndWait();
         }
     }
+
 }

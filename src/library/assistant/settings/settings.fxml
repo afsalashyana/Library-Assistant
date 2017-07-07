@@ -18,17 +18,17 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="finePerDay" promptText="Fine per day">
+            <JFXTextField fx:id="finePerDay" labelFloat="true" promptText="Fine per day">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXTextField fx:id="username" promptText="username">
+            <JFXTextField fx:id="username" labelFloat="true" promptText="username">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXPasswordField fx:id="password" promptText="password">
+            <JFXPasswordField fx:id="password" labelFloat="true" promptText="password">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
