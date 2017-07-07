@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import library.assistant.alert.AlertMaker;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class Preferences {
 
@@ -23,7 +24,7 @@ public class Preferences {
         nDaysWithoutFine = 14;
         finePerDay = 2;
         username = "admin";
-        password = "admin";
+        setPassword("admin");
     }
 
     public int getnDaysWithoutFine() {
@@ -55,7 +56,10 @@ public class Preferences {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.length() < 16) {
+            this.password = DigestUtils.shaHex(password);
+        }else
+            this.password = password;
     }
 
     public static void initConfig() {

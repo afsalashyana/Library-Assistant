@@ -12,13 +12,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/library/assistant/ui/login/login.fxml"));
 
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.show();
-        stage.setTitle("Library Assistant X");
+        stage.setTitle("Library Assistant Login");
 
         new Thread(() -> {
             DatabaseHandler.getInstance();
