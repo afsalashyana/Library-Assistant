@@ -3,6 +3,7 @@ package library.assistant.ui.listbook;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,12 +11,16 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.addbook.BookAddController;
 
@@ -63,16 +68,46 @@ public class BookListController implements Initializable {
                 String id = rs.getString("id");
                 String publisher = rs.getString("publisher");
                 Boolean avail = rs.getBoolean("isAvail");
-               
+
                 list.add(new Book(titlex, id, author, publisher, avail));
-               
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        tableView.getItems().setAll(list);
-        
+
+        tableView.setItems(list);
+
+    }
+
+    @FXML
+    private void handleBookDeleteOption(ActionEvent event) {
+        //Fetch the selected row
+        Book selectedForDeletion = tableView.getSelectionModel().getSelectedItem();
+        if (selectedForDeletion == null) {
+            AlertMaker.showErrorMessage("No book selected", "Please select a book for deletion.");
+            return;
+        }
+        if(DatabaseHandler.getInstance().isBookAlreadyIssued(selectedForDeletion))
+        {
+            AlertMaker.showErrorMessage("Cant be deleted", "This book is already issued and cant be deleted.");
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Deleting book");
+        alert.setContentText("Are you sure want to delete the book " + selectedForDeletion.getTitle() + " ?");
+        Optional<ButtonType> answer = alert.showAndWait();
+        if (answer.get() == ButtonType.OK) {
+            Boolean result = DatabaseHandler.getInstance().deleteBook(selectedForDeletion);
+            if (result) {
+                AlertMaker.showSimpleAlert("Book deleted", selectedForDeletion.getTitle() + " was deleted successfully.");
+                list.remove(selectedForDeletion);
+            } else {
+                AlertMaker.showSimpleAlert("Failed", selectedForDeletion.getTitle() + " could not be deleted");
+            }
+        } else {
+            AlertMaker.showSimpleAlert("Deletion cancelled", "Deletion process cancelled");
+        }
     }
 
     public static class Book {

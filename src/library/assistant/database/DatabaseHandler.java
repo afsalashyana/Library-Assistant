@@ -3,10 +3,14 @@ package library.assistant.database;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import library.assistant.ui.listbook.BookListController.Book;
 
 public final class DatabaseHandler {
 
@@ -139,5 +143,39 @@ public final class DatabaseHandler {
             return false;
         } finally {
         }
+    }
+
+    public boolean deleteBook(Book book) {
+        try {
+            String deleteStatement = "DELETE FROM BOOK WHERE ID = ?";
+            PreparedStatement stmt = conn.prepareStatement(deleteStatement);
+            stmt.setString(1, book.getId());
+            int res = stmt.executeUpdate();
+            if (res == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public boolean isBookAlreadyIssued(Book book)
+    {
+        try {
+            String checkstmt = "SELECT COUNT(*) FROM ISSUE WHERE bookid=?";
+            PreparedStatement stmt = conn.prepareStatement(checkstmt);
+            stmt.setString(1, book.getId());
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next())
+            {
+                int count = rs.getInt(1);
+                System.out.println(count);
+                return (count>0);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
