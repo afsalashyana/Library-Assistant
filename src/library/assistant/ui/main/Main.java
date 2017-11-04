@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.util.LibraryAssistantUtil;
 
 public class Main extends Application {
 
@@ -20,6 +21,8 @@ public class Main extends Application {
         stage.show();
         stage.setTitle("Library Assistant Login");
 
+        LibraryAssistantUtil.setStageIcon(stage);
+        
         new Thread(() -> {
             DatabaseHandler.getInstance();
         }).start();

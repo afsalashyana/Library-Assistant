@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import library.assistant.settings.Preferences;
 import library.assistant.ui.main.MainController;
+import library.assistant.util.LibraryAssistantUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class LoginController implements Initializable {
@@ -70,6 +71,7 @@ public class LoginController implements Initializable {
             stage.setTitle("Library Assistant");
             stage.setScene(new Scene(parent));
             stage.show();
+            LibraryAssistantUtil.setStageIcon(stage);
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }

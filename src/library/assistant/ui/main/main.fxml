@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.main.MainController">
+<StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.main.MainController">
    <children>
       <BorderPane prefHeight="455.0" prefWidth="665.0">
          <top>
@@ -176,7 +176,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <JFXButton onAction="#loadIssueOperation" styleClass="setup-button" stylesheets="@main.css" text="Issue">
+                                          <JFXButton onAction="#loadIssueOperation" prefHeight="44.0" prefWidth="151.0" styleClass="setup-button" stylesheets="@main.css" text="Issue">
                                              <graphic>
                                                 <ImageView fx:id="issueButton" fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
