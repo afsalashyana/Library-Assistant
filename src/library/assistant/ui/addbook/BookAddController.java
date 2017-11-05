@@ -14,7 +14,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.listbook.BookListController;
 
 public class BookAddController implements Initializable {
 
@@ -34,6 +36,7 @@ public class BookAddController implements Initializable {
     DatabaseHandler databaseHandler;
     @FXML
     private AnchorPane rootPane;
+    private Boolean isInEditMode = Boolean.FALSE;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,6 +55,11 @@ public class BookAddController implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("Please Enter in all fields");
             alert.showAndWait();
+            return;
+        }
+
+        if (isInEditMode) {
+            handleEditOperation();
             return;
         }
 
@@ -87,7 +95,7 @@ public class BookAddController implements Initializable {
         String qu = "SELECT title FROM BOOK";
         ResultSet rs = databaseHandler.execQuery(qu);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 String titlex = rs.getString("title");
                 System.out.println(titlex);
             }
@@ -96,4 +104,21 @@ public class BookAddController implements Initializable {
         }
     }
 
+    public void inflateUI(BookListController.Book book) {
+        title.setText(book.getTitle());
+        id.setText(book.getId());
+        author.setText(book.getAuthor());
+        publisher.setText(book.getPublisher());
+        id.setEditable(false);
+        isInEditMode = Boolean.TRUE;
+    }
+
+    private void handleEditOperation() {
+        BookListController.Book book = new BookListController.Book(title.getText(), id.getText(), author.getText(), publisher.getText(), true);
+        if (databaseHandler.updateBook(book)) {
+            AlertMaker.showSimpleAlert("Success", "Book Updated");
+        } else {
+            AlertMaker.showErrorMessage("Failed", "Cant update book");
+        }
+    }
 }

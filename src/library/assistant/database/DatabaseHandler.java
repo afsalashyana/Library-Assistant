@@ -213,4 +213,21 @@ public final class DatabaseHandler {
         }
         return false;
     }
+    
+    public boolean updateBook(Book book)
+    {
+        try {
+            String update = "UPDATE BOOK SET TITLE=?, AUTHOR=?, PUBLISHER=? WHERE ID=?";
+            PreparedStatement stmt = conn.prepareStatement(update);
+            stmt.setString(1, book.getTitle());
+            stmt.setString(2, book.getAuthor());
+            stmt.setString(3, book.getPublisher());
+            stmt.setString(4, book.getId());
+            int res = stmt.executeUpdate();
+            return (res>0);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }

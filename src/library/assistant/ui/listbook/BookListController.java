@@ -1,5 +1,6 @@
 package library.assistant.ui.listbook;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,16 +14,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.addbook.BookAddController;
+import library.assistant.ui.main.MainController;
+import library.assistant.util.LibraryAssistantUtil;
 
 public class BookListController implements Initializable {
 
@@ -58,6 +66,8 @@ public class BookListController implements Initializable {
     }
 
     private void loadData() {
+        list.clear();
+        
         DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM BOOK";
         ResultSet rs = handler.execQuery(qu);
@@ -77,7 +87,6 @@ public class BookListController implements Initializable {
         }
 
         tableView.setItems(list);
-
     }
 
     @FXML
@@ -88,8 +97,7 @@ public class BookListController implements Initializable {
             AlertMaker.showErrorMessage("No book selected", "Please select a book for deletion.");
             return;
         }
-        if(DatabaseHandler.getInstance().isBookAlreadyIssued(selectedForDeletion))
-        {
+        if (DatabaseHandler.getInstance().isBookAlreadyIssued(selectedForDeletion)) {
             AlertMaker.showErrorMessage("Cant be deleted", "This book is already issued and cant be deleted.");
             return;
         }
@@ -108,6 +116,42 @@ public class BookListController implements Initializable {
         } else {
             AlertMaker.showSimpleAlert("Deletion cancelled", "Deletion process cancelled");
         }
+    }
+
+    @FXML
+    private void handleBookEditOption(ActionEvent event) {
+        //Fetch the selected row
+        Book selectedForEdit = tableView.getSelectionModel().getSelectedItem();
+        if (selectedForEdit == null) {
+            AlertMaker.showErrorMessage("No book selected", "Please select a book for deletion.");
+            return;
+        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/library/assistant/ui/addbook/add_book.fxml"));
+            Parent parent = loader.load();
+
+            BookAddController controller = (BookAddController) loader.getController();
+            controller.inflateUI(selectedForEdit);
+            
+            Stage stage = new Stage(StageStyle.DECORATED);
+            stage.setTitle("Edit Book");
+            stage.setScene(new Scene(parent));
+            stage.show();
+            LibraryAssistantUtil.setStageIcon(stage);
+            
+            stage.setOnCloseRequest((e)->{
+                handleRefresh(new ActionEvent());
+            });
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleRefresh(ActionEvent event) 
+    {
+        loadData();
     }
 
     public static class Book {
