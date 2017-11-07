@@ -7,9 +7,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.listmember.MemberListController;
+import library.assistant.ui.listmember.MemberListController.Member;
 
 public class MemberAddController implements Initializable {
 
@@ -27,6 +29,8 @@ public class MemberAddController implements Initializable {
     private JFXButton saveButton;
     @FXML
     private JFXButton cancelButton;
+    
+    private Boolean isInEditMode = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,6 +39,8 @@ public class MemberAddController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
+        Stage stage = (Stage)name.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -46,9 +52,16 @@ public class MemberAddController implements Initializable {
 
         Boolean flag = mName.isEmpty() || mID.isEmpty() || mMobile.isEmpty() || mEmail.isEmpty();
         if (flag) {
-            AlertMaker.showErrorMessage("Cant add member", "Please Enter in all fields");
+            AlertMaker.showErrorMessage("Cant process member", "Please Enter in all fields");
             return;
         }
+        
+        if(isInEditMode)
+        {
+            handleUpdateMember();
+            return;
+        }
+        
         String st = "INSERT INTO MEMBER VALUES ("
                 + "'" + mID + "',"
                 + "'" + mName + "',"
@@ -60,6 +73,27 @@ public class MemberAddController implements Initializable {
             AlertMaker.showSimpleAlert("Member Added", "Saved");
         } else {
             AlertMaker.showErrorMessage("Member cant be added", "Error Occured");
+        }
+    }
+    
+    public void infalteUI(MemberListController.Member member)
+    {
+        name.setText(member.getName());
+        id.setText(member.getId());
+        id.setEditable(false);
+        mobile.setText(member.getMobile());
+        email.setText(member.getEmail());
+        
+        isInEditMode = Boolean.TRUE;
+    }
+
+    private void handleUpdateMember() 
+    {
+        Member member = new MemberListController.Member(name.getText(), id.getText(), mobile.getText(), email.getText());
+        if (DatabaseHandler.getInstance().updateMember(member)) {
+            AlertMaker.showSimpleAlert("Success", "Member Updated");
+        } else {
+            AlertMaker.showErrorMessage("Failed", "Cant update member");
         }
     }
 

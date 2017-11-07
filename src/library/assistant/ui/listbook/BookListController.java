@@ -123,7 +123,7 @@ public class BookListController implements Initializable {
         //Fetch the selected row
         Book selectedForEdit = tableView.getSelectionModel().getSelectedItem();
         if (selectedForEdit == null) {
-            AlertMaker.showErrorMessage("No book selected", "Please select a book for deletion.");
+            AlertMaker.showErrorMessage("No book selected", "Please select a book for edit.");
             return;
         }
         try {
