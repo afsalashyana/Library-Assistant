@@ -29,8 +29,6 @@ public class LoginController implements Initializable {
     private JFXPasswordField password;
 
     Preferences preference;
-    @FXML
-    private Label titleLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,9 +37,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        titleLabel.setText("Library Assistant Login");
-        titleLabel.setStyle("-fx-background-color:black;-fx-text-fikll:white");
-
         String uname = username.getText();
         String pword = DigestUtils.shaHex(password.getText());
 
@@ -49,10 +44,9 @@ public class LoginController implements Initializable {
             closeStage();
             loadMain();
         } else {
-            titleLabel.setText("Invalid Credentails");
-            titleLabel.setStyle("-fx-background-color:#d32f2f;-fx-text-fill:white");
+            username.getStyleClass().add("wrong-credentials");
+            password.getStyleClass().add("wrong-credentials");
         }
-
     }
 
     @FXML
