@@ -22,20 +22,19 @@
 .button{
     -fx-text-fill: -fx-primarytext;
     -fx-background-color: -fx-primary;
-}
-
-/*Login Screen Specific*/
-.login-button{
     -fx-border-color: -fx-secondary;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
+    -fx-font-size: 13pt;
 }
 
-.login-button:hover{
+.button:hover{
     -fx-border-color: -fx-secondary;
     -fx-background-color: -fx-secondary;
     -fx-text-fill: -fx-primary;
 }
+
+/*Login Screen Specific*/
 
 .text-field
 {
@@ -99,4 +98,11 @@
 .toolbar-button:hover .glyph-icon
 {
     -fx-fill: -fx-primary;
+}
+
+/*Text styling*/
+.main-text
+{
+    -fx-fill: -fx-secondary;
+    -fx-font-size: 14pt;
 }
