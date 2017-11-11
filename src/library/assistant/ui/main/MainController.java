@@ -1,7 +1,10 @@
 package library.assistant.ui.main;
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.effects.JFXDepthManager;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -14,21 +17,20 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.util.LibraryAssistantUtil;
 
@@ -57,12 +59,14 @@ public class MainController implements Initializable {
     @FXML
     private JFXTextField bookID;
     @FXML
-    private ListView<String> issueDataList;
+    private StackPane rootPane;
+    @FXML
+    private JFXHamburger hamburger;
+    @FXML
+    private JFXDrawer drawer;
 
     Boolean isReadyForSubmission = false;
     DatabaseHandler databaseHandler;
-    @FXML
-    private StackPane rootPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -70,44 +74,8 @@ public class MainController implements Initializable {
         JFXDepthManager.setDepth(member_info, 1);
 
         databaseHandler = DatabaseHandler.getInstance();
-    }
 
-    @FXML
-    private void loadAddMember(ActionEvent event) {
-        loadWindow("/library/assistant/ui/addmember/member_add.fxml", "Add New Member");
-    }
-
-    @FXML
-    private void loadAddBook(ActionEvent event) {
-        loadWindow("/library/assistant/ui/addbook/add_book.fxml", "Add New Book");
-    }
-
-    @FXML
-    private void loadMemberTable(ActionEvent event) {
-        loadWindow("/library/assistant/ui/listmember/member_list.fxml", "Member List");
-    }
-
-    @FXML
-    private void loadBookTable(ActionEvent event) {
-        loadWindow("/library/assistant/ui/listbook/book_list.fxml", "Book List");
-    }
-
-    @FXML
-    private void loadSettings(ActionEvent event) {
-        loadWindow("/library/assistant/settings/settings.fxml", "Settings");
-    }
-
-    void loadWindow(String loc, String title) {
-        try {
-            Parent parent = FXMLLoader.load(getClass().getResource(loc));
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle(title);
-            stage.setScene(new Scene(parent));
-            stage.show();
-            LibraryAssistantUtil.setStageIcon(stage);
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initDrawer();
     }
 
     @FXML
@@ -265,7 +233,6 @@ public class MainController implements Initializable {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        issueDataList.getItems().setAll(issueData);
     }
 
     @FXML
@@ -361,26 +328,46 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleMenuAddBook(ActionEvent event) {
-        loadWindow("/library/assistant/ui/addbook/add_book.fxml", "Add New Book");
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/addbook/add_book.fxml"), "Add New Book", null);
     }
 
     @FXML
     private void handleMenuAddMember(ActionEvent event) {
-        loadWindow("/library/assistant/ui/addmember/member_add.fxml", "Add New Member");
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/addmember/member_add.fxml"), "Add New Member", null);
     }
 
     @FXML
     private void handleMenuViewBook(ActionEvent event) {
-        loadWindow("/library/assistant/ui/listbook/book_list.fxml", "Book List");
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/listbook/book_list.fxml"), "Book List", null);
     }
 
     private void handleMenuViewMember(ActionEvent event) {
-        loadWindow("/library/assistant/ui/listmember/member_list.fxml", "Member List");
-    }    
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/listmember/member_list.fxml"), "Member List", null);
+    }
 
     @FXML
     private void handleMenuFullScreen(ActionEvent event) {
         Stage stage = ((Stage) rootPane.getScene().getWindow());
         stage.setFullScreen(!stage.isFullScreen());
+    }
+
+    private void initDrawer() {
+        try {
+            VBox toolbar = FXMLLoader.load(getClass().getResource("/library/assistant/ui/main/toolbar/toolbar.fxml"));
+            drawer.setSidePane(toolbar);
+        } catch (IOException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        HamburgerSlideCloseTransition task = new HamburgerSlideCloseTransition(hamburger);
+        task.setRate(-1);
+        hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (Event event) -> {
+            task.setRate(task.getRate() * -1);
+            task.play();
+            if (drawer.isHidden()) {
+                drawer.open();
+            } else {
+                drawer.close();
+            }
+        });
     }
 }

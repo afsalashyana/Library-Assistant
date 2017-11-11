@@ -21,6 +21,7 @@
 
 .button{
     -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
 }
 
 /*Login Screen Specific*/
@@ -47,4 +48,55 @@
 {
     -jfx-unfocus-color: -fx-red;
     -jfx-focus-color: -fx-red;
+}
+
+/*Main Screen CSS Styling starts here*/
+
+/*TablPane styling*/
+.tab{
+    -fx-background-color: -fx-primary;
+    -fx-pref-width : 350;
+    -fx-pref-height : 60;
+}
+
+.tab-header-background{
+    -fx-background-color: -fx-primary;
+}
+
+/*Menu bar Styling*/
+.menu-bar{
+    -fx-base : -fx-primary;
+    -fx-background-color: -fx-primary;
+}
+
+.context-menu
+{
+    -fx-background-color:  derive(-fx-primary, 20%);
+}
+
+/*Hamburger Styling*/
+.jfx-hamburger-icon{
+    -fx-spacing: 7;
+}
+
+.jfx-hamburger-icon StackPane
+{
+    -fx-background-color: -fx-secondary;
+    -fx-background-radius: 5px;
+}
+
+/*Toolbar buttons*/
+.toolbar-button
+{
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+.toolbar-button:hover
+{
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.toolbar-button:hover .glyph-icon
+{
+    -fx-fill: -fx-primary;
 }
