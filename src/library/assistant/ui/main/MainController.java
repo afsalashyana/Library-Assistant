@@ -10,8 +10,10 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -55,8 +57,6 @@ public class MainController implements Initializable {
     @FXML
     private Text memberMobile;
     @FXML
-    private ImageView issueButton;
-    @FXML
     private JFXTextField bookID;
     @FXML
     private StackPane rootPane;
@@ -64,6 +64,24 @@ public class MainController implements Initializable {
     private JFXHamburger hamburger;
     @FXML
     private JFXDrawer drawer;
+    @FXML
+    private Text memberNameHolder;
+    @FXML
+    private Text memberEmailHolder;
+    @FXML
+    private Text memberContactHolder;
+    @FXML
+    private Text bookNameHolder;
+    @FXML
+    private Text bookAuthorHolder;
+    @FXML
+    private Text bookPublisherHolder;
+    @FXML
+    private Text issueDateHolder;
+    @FXML
+    private Text numberDaysHolder;
+    @FXML
+    private Text fineInfoHolder;
 
     Boolean isReadyForSubmission = false;
     DatabaseHandler databaseHandler;
@@ -194,43 +212,39 @@ public class MainController implements Initializable {
         ObservableList<String> issueData = FXCollections.observableArrayList();
         isReadyForSubmission = false;
 
-        String id = bookID.getText();
-        String qu = "SELECT * FROM ISSUE WHERE bookID = '" + id + "'";
-        ResultSet rs = databaseHandler.execQuery(qu);
         try {
-            while (rs.next()) {
-                String mBookID = id;
-                String mMemberID = rs.getString("memberID");
+            String id = bookID.getText();
+            String myQuery = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, ISSUE.renew_count,\n"
+                    + "MEMBER.name, MEMBER.mobile, MEMBER.email,\n"
+                    + "BOOK.title, BOOK.author, BOOK.publisher\n"
+                    + "FROM ISSUE\n"
+                    + "LEFT JOIN MEMBER\n"
+                    + "ON ISSUE.memberID=MEMBER.ID\n"
+                    + "LEFT JOIN BOOK\n"
+                    + "ON ISSUE.bookID=BOOK.ID\n"
+                    + "WHERE ISSUE.bookID='" + id + "'";
+            ResultSet rs = databaseHandler.execQuery(myQuery);
+            if (rs.next()) {
+                memberNameHolder.setText(rs.getString("name"));
+                memberContactHolder.setText(rs.getString("mobile"));
+                memberEmailHolder.setText(rs.getString("email"));
+
+                bookNameHolder.setText(rs.getString("title"));
+                bookAuthorHolder.setText(rs.getString("author"));
+                bookPublisherHolder.setText(rs.getString("publisher"));
+
                 Timestamp mIssueTime = rs.getTimestamp("issueTime");
-                int mRenewCount = rs.getInt("renew_count");
-
-                issueData.add("Issue Date and Time :" + mIssueTime.toGMTString());
-                issueData.add("Renew Count :" + mRenewCount);
-
-                issueData.add("Book Information:-");
-                qu = "SELECT * FROM BOOK WHERE ID = '" + mBookID + "'";
-                ResultSet r1 = databaseHandler.execQuery(qu);
-
-                while (r1.next()) {
-                    issueData.add("\tBook Name :" + r1.getString("title"));
-                    issueData.add("\tBook ID :" + r1.getString("id"));
-                    issueData.add("\tBook Author :" + r1.getString("author"));
-                    issueData.add("\tBook Publisher :" + r1.getString("publisher"));
-                }
-                qu = "SELECT * FROM MEMBER WHERE ID = '" + mMemberID + "'";
-                r1 = databaseHandler.execQuery(qu);
-                issueData.add("Member Information:-");
-
-                while (r1.next()) {
-                    issueData.add("\tName :" + r1.getString("name"));
-                    issueData.add("\tMobile :" + r1.getString("mobile"));
-                    issueData.add("\tEmail :" + r1.getString("email"));
-                }
+                Date dateOfIssue = new Date(mIssueTime.getTime());
+                issueDateHolder.setText(dateOfIssue.toString());
+                Long timeElapsed = System.currentTimeMillis() - mIssueTime.getTime();
+                Long daysElapsed = TimeUnit.DAYS.convert(timeElapsed, TimeUnit.MILLISECONDS);
+                numberDaysHolder.setText(daysElapsed.toString());
+                fineInfoHolder.setText("Not Supported Yet");
 
                 isReadyForSubmission = true;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }

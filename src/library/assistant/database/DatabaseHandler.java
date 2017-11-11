@@ -5,6 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -160,26 +161,24 @@ public final class DatabaseHandler {
         }
         return false;
     }
-    
-    public boolean isBookAlreadyIssued(Book book)
-    {
+
+    public boolean isBookAlreadyIssued(Book book) {
         try {
             String checkstmt = "SELECT COUNT(*) FROM ISSUE WHERE bookid=?";
             PreparedStatement stmt = conn.prepareStatement(checkstmt);
             stmt.setString(1, book.getId());
             ResultSet rs = stmt.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 int count = rs.getInt(1);
                 System.out.println(count);
-                return (count>0);
+                return (count > 0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
+
     public boolean deleteMember(MemberListController.Member member) {
         try {
             String deleteStatement = "DELETE FROM MEMBER WHERE id = ?";
@@ -194,28 +193,25 @@ public final class DatabaseHandler {
         }
         return false;
     }
-    
-    public boolean isMemberHasAnyBooks(MemberListController.Member member)
-    {
+
+    public boolean isMemberHasAnyBooks(MemberListController.Member member) {
         try {
             String checkstmt = "SELECT COUNT(*) FROM ISSUE WHERE memberID=?";
             PreparedStatement stmt = conn.prepareStatement(checkstmt);
             stmt.setString(1, member.getId());
             ResultSet rs = stmt.executeQuery();
-            if(rs.next())
-            {
+            if (rs.next()) {
                 int count = rs.getInt(1);
                 System.out.println(count);
-                return (count>0);
+                return (count > 0);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    public boolean updateBook(Book book)
-    {
+
+    public boolean updateBook(Book book) {
         try {
             String update = "UPDATE BOOK SET TITLE=?, AUTHOR=?, PUBLISHER=? WHERE ID=?";
             PreparedStatement stmt = conn.prepareStatement(update);
@@ -224,15 +220,14 @@ public final class DatabaseHandler {
             stmt.setString(3, book.getPublisher());
             stmt.setString(4, book.getId());
             int res = stmt.executeUpdate();
-            return (res>0);
+            return (res > 0);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    
-    public boolean updateMember(MemberListController.Member member)
-    {
+
+    public boolean updateMember(MemberListController.Member member) {
         try {
             String update = "UPDATE MEMBER SET NAME=?, EMAIL=?, MOBILE=? WHERE ID=?";
             PreparedStatement stmt = conn.prepareStatement(update);
@@ -241,10 +236,38 @@ public final class DatabaseHandler {
             stmt.setString(3, member.getMobile());
             stmt.setString(4, member.getId());
             int res = stmt.executeUpdate();
-            return (res>0);
+            return (res > 0);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public static void main(String[] args) throws Exception {
+        DatabaseHandler handler = new DatabaseHandler();
+        String qu = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, ISSUE.renew_count,\n"
+                + "MEMBER.name, MEMBER.mobile, MEMBER.email,\n"
+                + "BOOK.title, BOOK.author, BOOK.publisher, BOOK.isAvail\n"
+                + "FROM ISSUE\n"
+                + "LEFT JOIN MEMBER\n"
+                + "ON ISSUE.memberID=MEMBER.ID\n"
+                + "LEFT JOIN BOOK\n"
+                + "ON ISSUE.bookID=BOOK.ID\n"
+                + "WHERE ISSUE.bookID=?";
+        PreparedStatement stmt = conn.prepareStatement(qu);
+        stmt.setString(1, "B101");
+        ResultSet rs = stmt.executeQuery();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int columnsNumber = rsmd.getColumnCount();
+        while (rs.next()) {
+            for (int i = 1; i <= columnsNumber; i++) {
+                if (i > 1) {
+                    System.out.print(",  ");
+                }
+                String columnValue = rs.getString(i);
+                System.out.print(columnValue + "-" + rsmd.getColumnName(i));
+            }
+            System.out.println("");
+        }
     }
 }

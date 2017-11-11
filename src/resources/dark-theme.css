@@ -88,6 +88,9 @@
 .toolbar-button
 {
     -fx-background-color: derive(-fx-primary, 20%);
+    -fx-background-radius: 0px;
+    -fx-border-radius: 0px;
+    -fx-background-color: -fx-primary;
 }
 .toolbar-button:hover
 {
@@ -105,4 +108,9 @@
 {
     -fx-fill: -fx-secondary;
     -fx-font-size: 14pt;
+    -fx-text-alignment: center;
+}
+
+.submission-container{
+    -fx-background-color: derive(-fx-primary, 10%);
 }

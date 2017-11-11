@@ -180,6 +180,57 @@
                                                    </children>
                                                 </HBox>
                                              </bottom>
+                                             <center>
+                                                <HBox alignment="CENTER" prefHeight="10000.0" prefWidth="10000.0" BorderPane.alignment="CENTER">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="234.0" spacing="20.0" styleClass="submission-container">
+                                                         <children>
+                                                            <FontAwesomeIconView glyphName="USER" size="60">
+                                                               <VBox.margin>
+                                                                  <Insets top="20.0" />
+                                                               </VBox.margin>
+                                                            </FontAwesomeIconView>
+                                                            <Text fx:id="memberNameHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Member Name Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="memberEmailHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Member Email Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="memberContactHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Member Contact" wrappingWidth="300.0" />
+                                                         </children>
+                                                         <HBox.margin>
+                                                            <Insets right="20.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                      <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="248.0" spacing="20.0" styleClass="submission-container">
+                                                         <children>
+                                                            <FontAwesomeIconView glyphName="BOOK" size="60">
+                                                               <VBox.margin>
+                                                                  <Insets top="20.0" />
+                                                               </VBox.margin>
+                                                            </FontAwesomeIconView>
+                                                            <Text fx:id="bookNameHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Book Name Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="bookAuthorHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Book Author Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="bookPublisherHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Book Publisher Holder" wrappingWidth="300.0" />
+                                                         </children>
+                                                         <HBox.margin>
+                                                            <Insets right="20.0" />
+                                                         </HBox.margin>
+                                                      </VBox>
+                                                      <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="248.0" spacing="20.0" styleClass="submission-container">
+                                                         <children>
+                                                            <FontAwesomeIconView glyphName="USER" size="60">
+                                                               <VBox.margin>
+                                                                  <Insets top="20.0" />
+                                                               </VBox.margin>
+                                                            </FontAwesomeIconView>
+                                                            <Text fx:id="issueDateHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Issue Date Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="numberDaysHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="No of Days Holder" wrappingWidth="300.0" />
+                                                            <Text fx:id="fineInfoHolder" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="main-text" text="Fine Holder" wrappingWidth="300.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                   <BorderPane.margin>
+                                                      <Insets top="20.0" />
+                                                   </BorderPane.margin>
+                                                </HBox>
+                                             </center>
                                           </BorderPane>
                                        </children>
                                     </AnchorPane>
