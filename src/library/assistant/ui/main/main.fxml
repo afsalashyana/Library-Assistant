@@ -20,7 +20,7 @@
 
 <StackPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="1000.0" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.main.MainController">
    <children>
-      <AnchorPane>
+      <AnchorPane fx:id="rootAnchorPane">
          <children>
             <BorderPane prefHeight="455.0" prefWidth="665.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <top>
@@ -167,12 +167,12 @@
                                              <bottom>
                                                 <HBox alignment="CENTER" prefHeight="69.0" prefWidth="557.0" BorderPane.alignment="CENTER">
                                                    <children>
-                                                      <JFXButton onAction="#loadRenewOp" prefWidth="150.0" text="Renew">
+                                                      <JFXButton fx:id="renewButton" disable="true" onAction="#loadRenewOp" prefWidth="150.0" text="Renew">
                                                          <HBox.margin>
                                                             <Insets right="20.0" />
                                                          </HBox.margin>
                                                       </JFXButton>
-                                                      <JFXButton onAction="#loadSubmissionOp" prefWidth="150.0" text="Submission">
+                                                      <JFXButton fx:id="submissionButton" disable="true" onAction="#loadSubmissionOp" prefWidth="150.0" text="Submission">
                                                          <HBox.margin>
                                                             <Insets right="20.0" />
                                                          </HBox.margin>
@@ -181,7 +181,7 @@
                                                 </HBox>
                                              </bottom>
                                              <center>
-                                                <HBox alignment="CENTER" prefHeight="10000.0" prefWidth="10000.0" BorderPane.alignment="CENTER">
+                                                <HBox fx:id="submissionDataContainer" alignment="CENTER" opacity="0.0" prefHeight="10000.0" prefWidth="10000.0" BorderPane.alignment="CENTER">
                                                    <children>
                                                       <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="234.0" spacing="20.0" styleClass="submission-container">
                                                          <children>

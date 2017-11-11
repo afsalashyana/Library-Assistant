@@ -7,6 +7,7 @@
     -fx-primary : #2A2E37;
     -fx-secondary : #FFFF8D;
     -fx-primarytext : #B2B2B2;
+    -fx-blue: #1976D2;
     -fx-red: #FF0000;
 }
 
@@ -113,4 +114,17 @@
 
 .submission-container{
     -fx-background-color: derive(-fx-primary, 10%);
+}
+
+/*Dialog styling*/
+.dialog-button{
+    -fx-background-color: -fx-blue;
+    -fx-border-color: -fx-blue;
+    -fx-text-fill: white;
+}
+
+.dialog-button:hover{
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-primary;
+    -fx-text-fill: white;
 }

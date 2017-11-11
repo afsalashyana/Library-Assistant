@@ -1,8 +1,12 @@
 package library.assistant.ui.main;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.events.JFXDialogEvent;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
@@ -20,14 +24,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -85,6 +94,14 @@ public class MainController implements Initializable {
 
     Boolean isReadyForSubmission = false;
     DatabaseHandler databaseHandler;
+    @FXML
+    private AnchorPane rootAnchorPane;
+    @FXML
+    private JFXButton renewButton;
+    @FXML
+    private JFXButton submissionButton;
+    @FXML
+    private HBox submissionDataContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -209,6 +226,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void loadBookInfo2(ActionEvent event) {
+        clearEntries();
         ObservableList<String> issueData = FXCollections.observableArrayList();
         isReadyForSubmission = false;
 
@@ -242,6 +260,26 @@ public class MainController implements Initializable {
                 fineInfoHolder.setText("Not Supported Yet");
 
                 isReadyForSubmission = true;
+                disableEnableControls(true);
+                submissionDataContainer.setOpacity(1);
+            } else {
+                BoxBlur blur = new BoxBlur(3, 3, 3);
+
+                JFXDialogLayout dialogLayout = new JFXDialogLayout();
+                JFXButton button = new JFXButton("Okay.I'll Check");
+                button.getStyleClass().add("dialog-button");
+                JFXDialog dialog = new JFXDialog(rootPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+                button.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
+                    dialog.close();
+                });
+
+                dialogLayout.setHeading(new Label("No such book exists in Issue Records"));
+                dialogLayout.setActions(button);
+                dialog.show();
+                dialog.setOnDialogClosed((JFXDialogEvent event1) -> {
+                    rootAnchorPane.setEffect(null);
+                });
+                rootAnchorPane.setEffect(blur);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -277,6 +315,7 @@ public class MainController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Book Has Been Submitted");
                 alert.showAndWait();
+                loadBookInfo2(null);
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Failed");
@@ -319,6 +358,7 @@ public class MainController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Book Has Been Renewed");
                 alert.showAndWait();
+                loadBookInfo2(null);
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Failed");
@@ -383,5 +423,32 @@ public class MainController implements Initializable {
                 drawer.close();
             }
         });
+    }
+
+    private void clearEntries() {
+        memberNameHolder.setText("");
+        memberEmailHolder.setText("");
+        memberContactHolder.setText("");
+
+        bookNameHolder.setText("");
+        bookAuthorHolder.setText("");
+        bookPublisherHolder.setText("");
+
+        issueDateHolder.setText("");
+        numberDaysHolder.setText("");
+        fineInfoHolder.setText("");
+
+        disableEnableControls(false);
+        submissionDataContainer.setOpacity(0);
+    }
+
+    private void disableEnableControls(Boolean enableFlag) {
+        if (enableFlag) {
+            renewButton.setDisable(false);
+            submissionButton.setDisable(false);
+        } else {
+            renewButton.setDisable(true);
+            submissionButton.setDisable(true);
+        }
     }
 }
