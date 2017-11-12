@@ -35,14 +35,16 @@
     -fx-text-fill: -fx-primary;
 }
 
-/*Login Screen Specific*/
-
 .text-field
 {
     -fx-text-fill: -fx-primarytext;
     -fx-font-size : 13pt;
     -jfx-focus-color: -fx-secondary;
+    -fx-text-fill: derive(-fx-secondary, 20%);
 }
+
+/*Login Screen Specific*/
+
 
 .wrong-credentials
 {
