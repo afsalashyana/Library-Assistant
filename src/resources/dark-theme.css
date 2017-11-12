@@ -128,3 +128,8 @@
     -fx-border-color: -fx-primary;
     -fx-text-fill: white;
 }
+
+.jfx-layout-actions
+{
+    -fx-hgap:8;
+}
