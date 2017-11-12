@@ -22,7 +22,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +40,16 @@ import library.assistant.database.DatabaseHandler;
 import library.assistant.util.LibraryAssistantUtil;
 
 public class MainController implements Initializable {
+
+    private static final String BOOK_NOT_AVAILABLE = "Not Available";
+    private static final String NO_SUCH_BOOK_AVAILABLE = "No Such Book Available";
+    private static final String NO_SUCH_MEMBER_AVAILABLE = "No Such Member Available";
+    private static final String BOOK_AVAILABLE = "Available";
+
+    private Boolean isReadyForSubmission = false;
+    private DatabaseHandler databaseHandler;
+    private PieChart bookChart;
+    private PieChart memberChart;
 
     @FXML
     private HBox book_info;
@@ -86,11 +95,6 @@ public class MainController implements Initializable {
     private Text numberDaysHolder;
     @FXML
     private Text fineInfoHolder;
-
-    Boolean isReadyForSubmission = false;
-    DatabaseHandler databaseHandler;
-    PieChart bookChart;
-    PieChart memberChart;
     @FXML
     private AnchorPane rootAnchorPane;
     @FXML
@@ -105,6 +109,10 @@ public class MainController implements Initializable {
     private StackPane memberInfoContainer;
     @FXML
     private Tab bookIssueTab;
+    @FXML
+    private Tab renewTab;
+    @FXML
+    private JFXTabPane mainTabPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,14 +142,14 @@ public class MainController implements Initializable {
 
                 bookName.setText(bName);
                 bookAuthor.setText(bAuthor);
-                String status = (bStatus) ? "Available" : "Not Available";
+                String status = (bStatus) ? BOOK_AVAILABLE : BOOK_NOT_AVAILABLE;
                 bookStatus.setText(status);
 
                 flag = true;
             }
 
             if (!flag) {
-                bookName.setText("No Such Book Available");
+                bookName.setText(NO_SUCH_BOOK_AVAILABLE);
             }
 
         } catch (SQLException ex) {
@@ -181,7 +189,7 @@ public class MainController implements Initializable {
             }
 
             if (!flag) {
-                memberName.setText("No Such Member Available");
+                memberName.setText(NO_SUCH_MEMBER_AVAILABLE);
             }
 
         } catch (SQLException ex) {
@@ -191,6 +199,24 @@ public class MainController implements Initializable {
 
     @FXML
     private void loadIssueOperation(ActionEvent event) {
+        if (checkForIssueValidity()) {
+            JFXButton btn = new JFXButton("Okay!");
+            AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(btn), "Invalid Input", null);
+            return;
+        }
+        if (bookStatus.getText().equals(BOOK_NOT_AVAILABLE)) {
+            JFXButton btn = new JFXButton("Okay!");
+            JFXButton viewDetails = new JFXButton("View Details");
+            viewDetails.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e)->{
+                String bookToBeLoaded = bookIDInput.getText();
+                bookID.setText(bookToBeLoaded);
+                bookID.fireEvent(new ActionEvent());
+                mainTabPane.getSelectionModel().select(renewTab);
+            });
+            AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(btn, viewDetails), "Already issued book", "This book is already issued. Cant process issue request");
+            return;
+        }
+
         String memberID = memberIDInput.getText();
         String bookID = bookIDInput.getText();
 
@@ -356,6 +382,11 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    private void handleAboutMenu(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/about/about.fxml"), "About Me", null);
+    }
+
+    @FXML
     private void handleMenuFullScreen(ActionEvent event) {
         Stage stage = ((Stage) rootPane.getScene().getWindow());
         stage.setFullScreen(!stage.isFullScreen());
@@ -447,4 +478,13 @@ public class MainController implements Initializable {
             memberChart.setOpacity(0);
         }
     }
+
+    private boolean checkForIssueValidity() {
+        bookIDInput.fireEvent(new ActionEvent());
+        memberIDInput.fireEvent(new ActionEvent());
+        return bookIDInput.getText().isEmpty() || memberIDInput.getText().isEmpty()
+                || memberName.getText().isEmpty() || bookName.getText().isEmpty()
+                || bookName.getText().equals(NO_SUCH_BOOK_AVAILABLE) || memberName.getText().equals(NO_SUCH_MEMBER_AVAILABLE);
+    }
+
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="247.0" prefWidth="525.0" styleClass="custom-pane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.about.AboutController">
+   <children>
+      <ImageView fitHeight="154.0" fitWidth="247.0" layoutX="-12.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../resources/gc.png" />
+         </image>
+      </ImageView>
+      <Text fontSmoothingType="LCD" layoutX="87.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="about-text" text="Built with love and couple of lines of code" textAlignment="CENTER">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <VBox layoutX="231.0" layoutY="18.0" spacing="5.0">
+         <children>
+            <JFXButton onAction="#loadYoutubeChannel" prefHeight="40.0" prefWidth="269.0" styleClass="about-button" text="YouTube Channel" />
+            <JFXButton onAction="#loadBlog" prefHeight="40.0" prefWidth="269.0" styleClass="about-button" text="Blog" />
+            <JFXButton onAction="#loadLinkedIN" prefHeight="40.0" prefWidth="269.0" styleClass="about-button" text="Linked In" />
+            <JFXButton onAction="#loadFacebook" prefHeight="40.0" prefWidth="269.0" styleClass="about-button" text="Personal Facebook Page" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

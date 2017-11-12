@@ -46,7 +46,7 @@
                         </Menu>
                       <Menu mnemonicParsing="false" text="Help">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="About" />
+                          <MenuItem mnemonicParsing="false" onAction="#handleAboutMenu" text="About" />
                         </items>
                       </Menu>
                     </menus>
@@ -55,7 +55,7 @@
                <center>
                   <AnchorPane BorderPane.alignment="CENTER">
                      <children>
-                        <JFXTabPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXTabPane fx:id="mainTabPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <tabs>
                               <Tab fx:id="bookIssueTab" text="Book Issue">
                                  <content>
@@ -160,7 +160,7 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab text="Renew / Submission">
+                              <Tab fx:id="renewTab" text="Renew / Submission">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
