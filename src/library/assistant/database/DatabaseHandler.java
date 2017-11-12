@@ -5,11 +5,13 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import javax.swing.JOptionPane;
 import library.assistant.ui.listbook.BookListController.Book;
 import library.assistant.ui.listmember.MemberListController;
@@ -244,30 +246,48 @@ public final class DatabaseHandler {
     }
 
     public static void main(String[] args) throws Exception {
-        DatabaseHandler handler = new DatabaseHandler();
-        String qu = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, ISSUE.renew_count,\n"
-                + "MEMBER.name, MEMBER.mobile, MEMBER.email,\n"
-                + "BOOK.title, BOOK.author, BOOK.publisher, BOOK.isAvail\n"
-                + "FROM ISSUE\n"
-                + "LEFT JOIN MEMBER\n"
-                + "ON ISSUE.memberID=MEMBER.ID\n"
-                + "LEFT JOIN BOOK\n"
-                + "ON ISSUE.bookID=BOOK.ID\n"
-                + "WHERE ISSUE.bookID=?";
-        PreparedStatement stmt = conn.prepareStatement(qu);
-        stmt.setString(1, "B101");
-        ResultSet rs = stmt.executeQuery();
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (rs.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) {
-                    System.out.print(",  ");
-                }
-                String columnValue = rs.getString(i);
-                System.out.print(columnValue + "-" + rsmd.getColumnName(i));
+
+    }
+
+    public ObservableList<PieChart.Data> getBookGraphStatistics() {
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+        try {
+            String qu1 = "SELECT COUNT(*) FROM BOOK";
+            String qu2 = "SELECT COUNT(*) FROM ISSUE";
+            ResultSet rs = execQuery(qu1);
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                data.add(new PieChart.Data("Total Books (" + count + ")", count));
             }
-            System.out.println("");
+            rs = execQuery(qu2);
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                data.add(new PieChart.Data("Issued Books (" + count + ")", count));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return data;
+    }
+    
+    public ObservableList<PieChart.Data> getMemberGraphStatistics() {
+        ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+        try {
+            String qu1 = "SELECT COUNT(*) FROM MEMBER";
+            String qu2 = "SELECT COUNT(DISTINCT memberID) FROM ISSUE";
+            ResultSet rs = execQuery(qu1);
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                data.add(new PieChart.Data("Total Members (" + count + ")", count));
+            }
+            rs = execQuery(qu2);
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                data.add(new PieChart.Data("Members with books (" + count + ")", count));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }

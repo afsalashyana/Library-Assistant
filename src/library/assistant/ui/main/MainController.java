@@ -1,12 +1,10 @@
 package library.assistant.ui.main;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.events.JFXDialogEvent;
 import com.jfoenix.effects.JFXDepthManager;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
@@ -16,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -29,13 +26,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.Effect;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -96,6 +89,8 @@ public class MainController implements Initializable {
 
     Boolean isReadyForSubmission = false;
     DatabaseHandler databaseHandler;
+    PieChart bookChart;
+    PieChart memberChart;
     @FXML
     private AnchorPane rootAnchorPane;
     @FXML
@@ -104,6 +99,12 @@ public class MainController implements Initializable {
     private JFXButton submissionButton;
     @FXML
     private HBox submissionDataContainer;
+    @FXML
+    private StackPane bookInfoContainer;
+    @FXML
+    private StackPane memberInfoContainer;
+    @FXML
+    private Tab bookIssueTab;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -113,11 +114,13 @@ public class MainController implements Initializable {
         databaseHandler = DatabaseHandler.getInstance();
 
         initDrawer();
+        initGraphs();
     }
 
     @FXML
     private void loadBookInfo(ActionEvent event) {
         clearBookCache();
+        enableDisableGraph(false);
 
         String id = bookIDInput.getText();
         String qu = "SELECT * FROM BOOK WHERE id = '" + id + "'";
@@ -160,6 +163,7 @@ public class MainController implements Initializable {
     @FXML
     private void loadMemberInfo(ActionEvent event) {
         clearMemberCache();
+        enableDisableGraph(false);
 
         String id = memberIDInput.getText();
         String qu = "SELECT * FROM MEMBER WHERE id = '" + id + "'";
@@ -201,6 +205,7 @@ public class MainController implements Initializable {
             if (databaseHandler.execAction(str) && databaseHandler.execAction(str2)) {
                 JFXButton button = new JFXButton("Done!");
                 AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(button), "Book Issue Complete", null);
+                refreshGraphs();
             } else {
                 JFXButton button = new JFXButton("Okay.I'll Check");
                 AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(button), "Issue Operation Failed", null);
@@ -411,5 +416,35 @@ public class MainController implements Initializable {
         bookStatus.setText("");
         memberMobile.setText("");
         memberName.setText("");
+        enableDisableGraph(true);
+    }
+
+    private void initGraphs() {
+        bookChart = new PieChart(databaseHandler.getBookGraphStatistics());
+        memberChart = new PieChart(databaseHandler.getMemberGraphStatistics());
+        bookInfoContainer.getChildren().add(bookChart);
+        memberInfoContainer.getChildren().add(memberChart);
+
+        bookIssueTab.setOnSelectionChanged((Event event) -> {
+            clearIssueEntries();
+            if (bookIssueTab.isSelected()) {
+                refreshGraphs();
+            }
+        });
+    }
+
+    private void refreshGraphs() {
+        bookChart.setData(databaseHandler.getBookGraphStatistics());
+        memberChart.setData(databaseHandler.getMemberGraphStatistics());
+    }
+
+    private void enableDisableGraph(Boolean status) {
+        if (status) {
+            bookChart.setOpacity(1);
+            memberChart.setOpacity(1);
+        } else {
+            bookChart.setOpacity(0);
+            memberChart.setOpacity(0);
+        }
     }
 }
