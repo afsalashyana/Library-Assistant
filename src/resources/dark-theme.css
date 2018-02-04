@@ -90,10 +90,10 @@
 /*Toolbar buttons*/
 .toolbar-button
 {
-    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-border-color: transparent;
+    -fx-background-color: derive(-fx-primary, 10%);
     -fx-background-radius: 0px;
     -fx-border-radius: 0px;
-    -fx-background-color: -fx-primary;
 }
 .toolbar-button:hover
 {
