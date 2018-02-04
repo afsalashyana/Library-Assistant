@@ -20,6 +20,8 @@ This is a library management software developed using JavaFX programming languag
   <img src=https://i.imgur.com/YyK54nF.png>
   <img src=https://i.imgur.com/0wCfUjQ.png>
   <img src=https://i.imgur.com/E4OhaWl.png>
-  <img src=https://i.imgur.com/QvcJS1d.png>
+  <img src=https://i.imgur.com/3WMG9Bm.png>
+  <img src=https://i.imgur.com/3316yUv.png>
+  <img src=https://i.imgur.com/y7jrx93.png>
   <img src=https://i.imgur.com/O0LXqoK.png>
 </p>
