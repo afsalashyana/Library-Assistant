@@ -11,7 +11,7 @@
       <TableView fx:id="tableView" prefHeight="400.0" prefWidth="722.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="75.0" text="Name" />
-            <TableColumn fx:id="idCol" prefWidth="75.0" text="Member ID" />
+            <TableColumn fx:id="idCol" maxWidth="2800.0" prefWidth="60.0" text="Member ID" />
             <TableColumn fx:id="mobileCol" prefWidth="75.0" text="Mobile" />
             <TableColumn fx:id="emailCol" prefWidth="75.0" text="Email" />
          </columns>

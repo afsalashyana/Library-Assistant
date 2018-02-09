@@ -9,11 +9,10 @@ import library.assistant.util.LibraryAssistantUtil;
 
 public class ToolbarController implements Initializable {
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void loadAddMember(ActionEvent event) {
@@ -39,5 +38,10 @@ public class ToolbarController implements Initializable {
     private void loadSettings(ActionEvent event) {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/settings/settings.fxml"), "Settings", null);
     }
-    
+
+    @FXML
+    private void loadIssuedBookList(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/issuedlist/issued_list.fxml"), "Issued Book List", null);
+    }
+
 }

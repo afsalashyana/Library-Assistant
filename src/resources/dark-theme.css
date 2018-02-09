@@ -174,7 +174,7 @@
     -fx-background-color: derive(-fx-primary, 20%);
 }
 .table-row-cell {
-    -fx-cell-size: 35px;
+    -fx-cell-size: 40px;
 }
 .table-view .column-header-background{
     -fx-background-color: -fx-primary;
@@ -185,7 +185,6 @@
 }
 .table-view .column-header {
     -fx-background-color: transparent;
-    -fx-border-color: derive(white, -50%);
 }
 .table-view .table-cell{
     -fx-text-fill: white;
@@ -198,8 +197,11 @@
     -fx-border-color: transparent;
     -fx-table-cell-border-color: transparent;
 }
+.table-column{
+    -fx-alignment: CENTER;  
+}
 .table-row-cell:odd{
-    -fx-background-color: derive(-fx-primary, 20%);
+    -fx-background-color: derive(-fx-primary, 10%);
 }
 .table-row-cell:selected {
     -fx-background-color: -fx-secondary;
