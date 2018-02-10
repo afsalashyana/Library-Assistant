@@ -29,7 +29,7 @@ public class MemberAddController implements Initializable {
     private JFXButton saveButton;
     @FXML
     private JFXButton cancelButton;
-    
+
     private Boolean isInEditMode = false;
 
     @Override
@@ -39,7 +39,7 @@ public class MemberAddController implements Initializable {
 
     @FXML
     private void cancel(ActionEvent event) {
-        Stage stage = (Stage)name.getScene().getWindow();
+        Stage stage = (Stage) name.getScene().getWindow();
         stage.close();
     }
 
@@ -55,13 +55,12 @@ public class MemberAddController implements Initializable {
             AlertMaker.showErrorMessage("Cant process member", "Please Enter in all fields");
             return;
         }
-        
-        if(isInEditMode)
-        {
+
+        if (isInEditMode) {
             handleUpdateMember();
             return;
         }
-        
+
         String st = "INSERT INTO MEMBER VALUES ("
                 + "'" + mID + "',"
                 + "'" + mName + "',"
@@ -70,25 +69,31 @@ public class MemberAddController implements Initializable {
                 + ")";
         System.out.println(st);
         if (handler.execAction(st)) {
-            AlertMaker.showSimpleAlert("Member Added", "Saved");
+            AlertMaker.showSimpleAlert("New Member Added", mName + " has been added");
+            clearEntries();
         } else {
             AlertMaker.showErrorMessage("Member cant be added", "Error Occured");
         }
     }
-    
-    public void infalteUI(MemberListController.Member member)
-    {
+
+    public void infalteUI(MemberListController.Member member) {
         name.setText(member.getName());
         id.setText(member.getId());
         id.setEditable(false);
         mobile.setText(member.getMobile());
         email.setText(member.getEmail());
-        
+
         isInEditMode = Boolean.TRUE;
     }
 
-    private void handleUpdateMember() 
-    {
+    private void clearEntries() {
+        name.clear();
+        id.clear();
+        mobile.clear();
+        email.clear();
+    }
+
+    private void handleUpdateMember() {
         Member member = new MemberListController.Member(name.getText(), id.getText(), mobile.getText(), email.getText());
         if (DatabaseHandler.getInstance().updateMember(member)) {
             AlertMaker.showSimpleAlert("Success", "Member Updated");

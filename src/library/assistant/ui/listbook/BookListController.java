@@ -67,7 +67,7 @@ public class BookListController implements Initializable {
 
     private void loadData() {
         list.clear();
-        
+
         DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT * FROM BOOK";
         ResultSet rs = handler.execQuery(qu);
@@ -132,25 +132,24 @@ public class BookListController implements Initializable {
 
             BookAddController controller = (BookAddController) loader.getController();
             controller.inflateUI(selectedForEdit);
-            
+
             Stage stage = new Stage(StageStyle.DECORATED);
             stage.setTitle("Edit Book");
             stage.setScene(new Scene(parent));
             stage.show();
             LibraryAssistantUtil.setStageIcon(stage);
-            
-            stage.setOnCloseRequest((e)->{
+
+            stage.setOnCloseRequest((e) -> {
                 handleRefresh(new ActionEvent());
             });
-            
+
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void handleRefresh(ActionEvent event) 
-    {
+    private void handleRefresh(ActionEvent event) {
         loadData();
     }
 
@@ -160,14 +159,18 @@ public class BookListController implements Initializable {
         private final SimpleStringProperty id;
         private final SimpleStringProperty author;
         private final SimpleStringProperty publisher;
-        private final SimpleBooleanProperty availabilty;
+        private final SimpleStringProperty availabilty;
 
         public Book(String title, String id, String author, String pub, Boolean avail) {
             this.title = new SimpleStringProperty(title);
             this.id = new SimpleStringProperty(id);
             this.author = new SimpleStringProperty(author);
             this.publisher = new SimpleStringProperty(pub);
-            this.availabilty = new SimpleBooleanProperty(avail);
+            if (avail) {
+                this.availabilty = new SimpleStringProperty("Available");
+            } else {
+                this.availabilty = new SimpleStringProperty("Issued");
+            }
         }
 
         public String getTitle() {
@@ -186,7 +189,7 @@ public class BookListController implements Initializable {
             return publisher.get();
         }
 
-        public Boolean getAvailabilty() {
+        public String getAvailabilty() {
             return availabilty.get();
         }
 

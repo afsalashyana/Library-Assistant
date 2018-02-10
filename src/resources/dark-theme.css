@@ -1,6 +1,6 @@
 /* 
     Created on : 11 Nov, 2017, 4:42:53 AM
-    Author     : afsal
+    Author     : afsal villan
 */
 
 * {
@@ -164,7 +164,6 @@
     -fx-background-color: derive(-fx-primary, 5%);
 }
 
-
 /*TableView Default*/
 .table-view{
     -fx-background-color: derive(-fx-primary, 10%);
@@ -200,7 +199,7 @@
 .table-column{
     -fx-alignment: CENTER;  
 }
-.table-row-cell:odd{
+.table-row-cell:even{
     -fx-background-color: derive(-fx-primary, 10%);
 }
 .table-row-cell:selected {

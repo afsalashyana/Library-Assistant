@@ -13,10 +13,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import library.assistant.util.LibraryAssistantUtil;
 
 public class AlertMaker {
 
@@ -25,7 +28,8 @@ public class AlertMaker {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        LibraryAssistantUtil.setStageIcon(stage);
         alert.showAndWait();
     }
 
@@ -105,8 +109,8 @@ public class AlertMaker {
 
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         JFXDialog dialog = new JFXDialog(root, dialogLayout, JFXDialog.DialogTransition.TOP);
-        
-        controls.forEach(controlButton->{
+
+        controls.forEach(controlButton -> {
             controlButton.getStyleClass().add("dialog-button");
             controlButton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent mouseEvent) -> {
                 dialog.close();

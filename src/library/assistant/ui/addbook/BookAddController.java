@@ -72,12 +72,9 @@ public class BookAddController implements Initializable {
                 + ")";
         System.out.println(qu);
         if (databaseHandler.execAction(qu)) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("Success");
-            alert.showAndWait();
-        } else //Error
-        {
+            AlertMaker.showSimpleAlert("New book added", title + " has been added.");
+            clearEntries();
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Failed");
@@ -111,6 +108,13 @@ public class BookAddController implements Initializable {
         publisher.setText(book.getPublisher());
         id.setEditable(false);
         isInEditMode = Boolean.TRUE;
+    }
+
+    private void clearEntries() {
+        title.clear();
+        id.clear();
+        author.clear();
+        publisher.clear();
     }
 
     private void handleEditOperation() {
