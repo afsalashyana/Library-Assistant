@@ -223,7 +223,7 @@
                                                       </VBox>
                                                       <VBox alignment="TOP_CENTER" prefHeight="336.0" prefWidth="248.0" spacing="20.0" styleClass="submission-container">
                                                          <children>
-                                                            <FontAwesomeIconView glyphName="USER" size="60">
+                                                            <FontAwesomeIconView glyphName="CALENDAR_CHECK_ALT" size="60">
                                                                <VBox.margin>
                                                                   <Insets top="20.0" />
                                                                </VBox.margin>

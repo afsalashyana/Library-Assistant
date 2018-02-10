@@ -207,7 +207,7 @@ public class MainController implements Initializable {
         if (bookStatus.getText().equals(BOOK_NOT_AVAILABLE)) {
             JFXButton btn = new JFXButton("Okay!");
             JFXButton viewDetails = new JFXButton("View Details");
-            viewDetails.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e)->{
+            viewDetails.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent e) -> {
                 String bookToBeLoaded = bookIDInput.getText();
                 bookID.setText(bookToBeLoaded);
                 bookID.fireEvent(new ActionEvent());
@@ -276,11 +276,17 @@ public class MainController implements Initializable {
 
                 Timestamp mIssueTime = rs.getTimestamp("issueTime");
                 Date dateOfIssue = new Date(mIssueTime.getTime());
-                issueDateHolder.setText(dateOfIssue.toString());
+                issueDateHolder.setText(LibraryAssistantUtil.formatDateTimeString(dateOfIssue));
                 Long timeElapsed = System.currentTimeMillis() - mIssueTime.getTime();
-                Long daysElapsed = TimeUnit.DAYS.convert(timeElapsed, TimeUnit.MILLISECONDS);
-                numberDaysHolder.setText(daysElapsed.toString());
-                fineInfoHolder.setText("Not Supported Yet");
+                Long days = TimeUnit.DAYS.convert(timeElapsed, TimeUnit.MILLISECONDS) + 1;
+                String daysElapsed = String.format("Used %d days", days);
+                numberDaysHolder.setText(daysElapsed);
+                Float fine = LibraryAssistantUtil.getFineAmount(days.intValue());
+                if (fine > 0) {
+                    fineInfoHolder.setText(String.format("Fine : %.2f", LibraryAssistantUtil.getFineAmount(days.intValue())));
+                } else {
+                    fineInfoHolder.setText("");
+                }
 
                 isReadyForSubmission = true;
                 disableEnableControls(true);

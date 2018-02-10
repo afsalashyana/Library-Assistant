@@ -61,11 +61,11 @@ public class IssuedListController implements Initializable {
         issueCol.setCellValueFactory(new PropertyValueFactory<>("dateOfIssue"));
         daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
         fineCol.setCellValueFactory(new PropertyValueFactory<>("fine"));
+        tableView.setItems(list);
     }
 
     private void loadData() {
         list.clear();
-
         DatabaseHandler handler = DatabaseHandler.getInstance();
         String qu = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, MEMBER.name, BOOK.title FROM ISSUE\n"
                 + "LEFT OUTER JOIN MEMBER\n"
@@ -74,7 +74,6 @@ public class IssuedListController implements Initializable {
                 + "ON BOOK.id = ISSUE.bookID";
         ResultSet rs = handler.execQuery(qu);
         Preferences pref = Preferences.getPreferences();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
         try {
             int counter = 0;
             while (rs.next()) {
@@ -86,27 +85,19 @@ public class IssuedListController implements Initializable {
                 System.out.println("Issued on " + issueTime);
                 Integer days = Math.toIntExact(TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - issueTime.getTime())) + 1;
                 Float fine = LibraryAssistantUtil.getFineAmount(days);
-                IssueInfo issueInfo = new IssueInfo(counter, bookID, bookTitle, memberName, dateFormat.format(new Date(issueTime.getTime())), days, fine);
+                IssueInfo issueInfo = new IssueInfo(counter, bookID, bookTitle, memberName, LibraryAssistantUtil.formatDateTimeString(new Date(issueTime.getTime())), days, fine);
                 list.add(issueInfo);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
-        tableView.setItems(list);
     }
 
     @FXML
     private void handleRefresh(ActionEvent event) {
+        loadData();
     }
 
-    @FXML
-    private void handleMemberEdit(ActionEvent event) {
-    }
-
-    @FXML
-    private void handleMemberDelete(ActionEvent event) {
-    }
 
     public static class IssueInfo {
 

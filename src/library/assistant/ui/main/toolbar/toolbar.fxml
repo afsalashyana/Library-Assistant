@@ -28,7 +28,7 @@
       </JFXButton>
       <JFXButton contentDisplay="TOP" mnemonicParsing="false" onAction="#loadIssuedBookList" prefHeight="400.0" prefWidth="160.0" styleClass="toolbar-button" text="Issued Book List" textAlignment="CENTER">
          <graphic>
-            <FontAwesomeIconView glyphName="TABLE" size="25" textAlignment="CENTER" />
+            <FontAwesomeIconView glyphName="CHECK" size="25" textAlignment="CENTER" />
          </graphic>
       </JFXButton>
       <JFXButton contentDisplay="TOP" layoutX="10.0" layoutY="223.0" mnemonicParsing="false" onAction="#loadSettings" prefHeight="400.0" prefWidth="160.0" styleClass="toolbar-button" text="Settings" textAlignment="CENTER">
