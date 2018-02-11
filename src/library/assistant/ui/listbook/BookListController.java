@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import library.assistant.alert.AlertMaker;
@@ -37,7 +40,7 @@ public class BookListController implements Initializable {
     ObservableList<Book> list = FXCollections.observableArrayList();
 
     @FXML
-    private AnchorPane rootPane;
+    private StackPane rootPane;
     @FXML
     private TableView<Book> tableView;
     @FXML
@@ -50,11 +53,17 @@ public class BookListController implements Initializable {
     private TableColumn<Book, String> publisherCol;
     @FXML
     private TableColumn<Book, Boolean> availabilityCol;
+    @FXML
+    private AnchorPane contentPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
         loadData();
+    }
+
+    private Stage getStage() {
+        return (Stage) tableView.getScene().getWindow();
     }
 
     private void initCol() {
@@ -151,6 +160,28 @@ public class BookListController implements Initializable {
     @FXML
     private void handleRefresh(ActionEvent event) {
         loadData();
+    }
+
+    @FXML
+    private void exportAsPDF(ActionEvent event) {
+        List<List> printData = new ArrayList<>();
+        String[] headers = {"   Title   ", "ID", "  Author  ", "  Publisher ", "Avail"};
+        printData.add(Arrays.asList(headers));
+        for (Book book : list) {
+            List<String> row = new ArrayList<>();
+            row.add(book.getTitle());
+            row.add(book.getId());
+            row.add(book.getAuthor());
+            row.add(book.getPublisher());
+            row.add(book.getAvailabilty());
+            printData.add(row);
+        }
+        LibraryAssistantUtil.initPDFExprot(rootPane, contentPane, getStage(), printData);
+    }
+
+    @FXML
+    private void closeStage(ActionEvent event) {
+        getStage().close();
     }
 
     public static class Book {

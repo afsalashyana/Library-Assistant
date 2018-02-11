@@ -7,14 +7,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javax.swing.JOptionPane;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import library.assistant.ui.listbook.BookListController.Book;
 import library.assistant.ui.listmember.MemberListController;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public final class DatabaseHandler {
 
@@ -26,9 +36,7 @@ public final class DatabaseHandler {
 
     private DatabaseHandler() {
         createConnection();
-        setupBookTable();
-        setupMemberTable();
-        setupIssueTable();
+        inflateDB();
     }
 
     public static DatabaseHandler getInstance() {
@@ -36,6 +44,35 @@ public final class DatabaseHandler {
             handler = new DatabaseHandler();
         }
         return handler;
+    }
+
+    private void inflateDB() {
+        List<String> tableData = new ArrayList<>();
+        try {
+            Set<String> loadedTables = getDBTables();
+            System.out.println("Already loaded tables " + loadedTables);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(DatabaseHandler.class.getClass().getResourceAsStream("/resources/database/tables.xml"));
+            NodeList nList = doc.getElementsByTagName("table-entry");
+            for (int i = 0; i < nList.getLength(); i++) {
+                Node nNode = nList.item(i);
+                Element entry = (Element) nNode;
+                String tableName = entry.getAttribute("name");
+                String query = entry.getAttribute("col-data");
+                if (!loadedTables.contains(tableName.toLowerCase())) {
+                    tableData.add(String.format("CREATE TABLE %s (%s)", tableName, query));
+                }
+            }
+            if (tableData.isEmpty()) {
+                System.out.println("Tables are already loaded");
+            } else {
+                System.out.println("Inflating new tables.");
+                createTables(tableData);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     void createConnection() {
@@ -48,78 +85,17 @@ public final class DatabaseHandler {
         }
     }
 
-    void setupBookTable() {
-        String TABLE_NAME = "BOOK";
-        try {
-            stmt = conn.createStatement();
-
-            DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
-
-            if (tables.next()) {
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
-            } else {
-                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
-                        + "	id varchar(200) primary key,\n"
-                        + "	title varchar(200),\n"
-                        + "	author varchar(200),\n"
-                        + "	publisher varchar(100),\n"
-                        + "	isAvail boolean default true"
-                        + " )");
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage() + " --- setupDatabase");
-        } finally {
-        }
+    private Set<String> getDBTables() throws SQLException {
+        Set<String> set = new HashSet<>();
+        DatabaseMetaData dbmeta = conn.getMetaData();
+        readDBTable(set, dbmeta, "TABLE", null);
+        return set;
     }
 
-    void setupMemberTable() {
-        String TABLE_NAME = "MEMBER";
-        try {
-            stmt = conn.createStatement();
-
-            DatabaseMetaData dbm = conn.getMetaData();
-            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
-
-            if (tables.next()) {
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
-            } else {
-                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
-                        + "	id varchar(200) primary key,\n"
-                        + "	name varchar(200),\n"
-                        + "	mobile varchar(20),\n"
-                        + "	email varchar(100)\n"
-                        + " )");
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage() + " --- setupDatabase");
-        } finally {
-        }
-    }
-
-    void setupIssueTable() {
-        String TABLE_NAME = "ISSUE";
-        try {
-
-            stmt = conn.createStatement();
-            DatabaseMetaData dbm = conn.getMetaData();
-
-            ResultSet tables = dbm.getTables(null, null, TABLE_NAME.toUpperCase(), null);
-            if (tables.next()) {
-                System.out.println("Table " + TABLE_NAME + "already exists. Ready for go!");
-            } else {
-                stmt.execute("CREATE TABLE " + TABLE_NAME + "("
-                        + "     bookID varchar(200) primary key,\n"
-                        + "	memberID varchar(200),\n"
-                        + "	issueTime timestamp default CURRENT_TIMESTAMP,\n"
-                        + "	renew_count integer default 0,\n"
-                        + "	FOREIGN KEY (bookID) REFERENCES BOOK(id),\n"
-                        + "	FOREIGN KEY (memberID) REFERENCES MEMBER(id)"
-                        + " )");
-            }
-        } catch (SQLException e) {
-            System.err.println(e.getMessage() + " --- setupDatabase");
-        } finally {
+    private void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema) throws SQLException {
+        ResultSet rs = dbmeta.getTables(null, schema, null, new String[]{searchCriteria});
+        while (rs.next()) {
+            set.add(rs.getString("TABLE_NAME").toLowerCase());
         }
     }
 
@@ -246,7 +222,7 @@ public final class DatabaseHandler {
     }
 
     public static void main(String[] args) throws Exception {
-
+        DatabaseHandler.getInstance();
     }
 
     public ObservableList<PieChart.Data> getBookGraphStatistics() {
@@ -269,7 +245,7 @@ public final class DatabaseHandler {
         }
         return data;
     }
-    
+
     public ObservableList<PieChart.Data> getMemberGraphStatistics() {
         ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
         try {
@@ -289,5 +265,15 @@ public final class DatabaseHandler {
             e.printStackTrace();
         }
         return data;
+    }
+
+    private void createTables(List<String> tableData) throws SQLException {
+        Statement statement = conn.createStatement();
+        statement.closeOnCompletion();
+        for (String command : tableData) {
+            System.out.println(command);
+            statement.addBatch(command);
+        }
+        statement.executeBatch();
     }
 }

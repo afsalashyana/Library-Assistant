@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tables>
+    <table-entry name="BOOK" col-data="id varchar(200) primary key,title varchar(200),author varchar(200),publisher varchar(100),isAvail boolean default true"/>
+    <table-entry name="MEMBER" col-data="id varchar(200) primary key,name varchar(200),mobile varchar(20),email varchar(100)"/>
+    <table-entry name="ISSUE" col-data="bookID varchar(200) primary key,memberID varchar(200),issueTime timestamp default CURRENT_TIMESTAMP,renew_count integer default 0,FOREIGN KEY (bookID) REFERENCES BOOK(id),FOREIGN KEY (memberID) REFERENCES MEMBER(id)"/>
+</tables>

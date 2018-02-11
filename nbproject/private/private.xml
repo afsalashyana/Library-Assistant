@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/ui/listmember/MemberListController.java</file>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/export/pdf/ListToPDF.java</file>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/ui/issuedlist/IssuedListController.java</file>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/util/LibraryAssistantUtil.java</file>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/alert/AlertMaker.java</file>
+            <file>file:/C:/Users/afsal/Documents/Library%20Assistant/src/library/assistant/ui/listbook/BookListController.java</file>
+        </group>
     </open-files>
 </project-private>
