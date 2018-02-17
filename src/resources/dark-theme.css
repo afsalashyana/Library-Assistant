@@ -9,6 +9,7 @@
     -fx-primarytext : #B2B2B2;
     -fx-blue: #1976D2;
     -fx-red: #FF0000;
+    -fx-green:#2E7D32;
 }
 
 .root{
@@ -120,14 +121,15 @@
 
 /*Dialog styling*/
 .dialog-button{
-    -fx-background-color: -fx-blue;
-    -fx-border-color: -fx-blue;
+    -fx-border-color: -fx-green;
     -fx-text-fill: white;
+    -fx-border-radius: 1px;
+    -fx-background-radius: 3px;
 }
 
 .dialog-button:hover{
-    -fx-background-color: -fx-primary;
-    -fx-border-color: -fx-primary;
+    -fx-background-color: -fx-green;
+    -fx-border-color: derive(-fx-green, -20%);
     -fx-text-fill: white;
 }
 
@@ -238,4 +240,23 @@
 .table-context
 {
     -fx-base: -fx-primary;
+}
+
+
+/*JFXDialog styling*/
+.jfx-layout-heading
+{
+    -fx-background-color: -fx-green;
+}
+.jfx-layout-heading .label
+{
+    -fx-text-fill: white;
+}
+.jfx-layout-body, .jfx-layout-actions{
+    -fx-background-color: -fx-primary;   
+}
+.jfx-layout-body .label
+{
+    -fx-text-fill: white;
+    -fx-padding: 20px 0 0 0;
 }

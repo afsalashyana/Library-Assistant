@@ -34,9 +34,12 @@ public final class DatabaseHandler {
     private static Connection conn = null;
     private static Statement stmt = null;
 
-    private DatabaseHandler() {
+    static {
         createConnection();
         inflateDB();
+    }
+
+    private DatabaseHandler() {
     }
 
     public static DatabaseHandler getInstance() {
@@ -46,7 +49,7 @@ public final class DatabaseHandler {
         return handler;
     }
 
-    private void inflateDB() {
+    private static void inflateDB() {
         List<String> tableData = new ArrayList<>();
         try {
             Set<String> loadedTables = getDBTables();
@@ -75,7 +78,7 @@ public final class DatabaseHandler {
         }
     }
 
-    void createConnection() {
+    private static void createConnection() {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             conn = DriverManager.getConnection(DB_URL);
@@ -85,14 +88,14 @@ public final class DatabaseHandler {
         }
     }
 
-    private Set<String> getDBTables() throws SQLException {
+    private static Set<String> getDBTables() throws SQLException {
         Set<String> set = new HashSet<>();
         DatabaseMetaData dbmeta = conn.getMetaData();
         readDBTable(set, dbmeta, "TABLE", null);
         return set;
     }
 
-    private void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema) throws SQLException {
+    private static void readDBTable(Set<String> set, DatabaseMetaData dbmeta, String searchCriteria, String schema) throws SQLException {
         ResultSet rs = dbmeta.getTables(null, schema, null, new String[]{searchCriteria});
         while (rs.next()) {
             set.add(rs.getString("TABLE_NAME").toLowerCase());
@@ -267,7 +270,7 @@ public final class DatabaseHandler {
         return data;
     }
 
-    private void createTables(List<String> tableData) throws SQLException {
+    private static void createTables(List<String> tableData) throws SQLException {
         Statement statement = conn.createStatement();
         statement.closeOnCompletion();
         for (String command : tableData) {
@@ -275,5 +278,9 @@ public final class DatabaseHandler {
             statement.addBatch(command);
         }
         statement.executeBatch();
+    }
+
+    public Connection getConnection() {
+        return conn;
     }
 }

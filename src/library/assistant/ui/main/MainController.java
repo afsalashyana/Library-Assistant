@@ -408,13 +408,17 @@ public class MainController implements Initializable {
         HamburgerSlideCloseTransition task = new HamburgerSlideCloseTransition(hamburger);
         task.setRate(-1);
         hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (Event event) -> {
+            drawer.toggle();
+        });
+        drawer.setOnDrawerOpening((event) -> {
             task.setRate(task.getRate() * -1);
             task.play();
-            if (drawer.isHidden()) {
-                drawer.open();
-            } else {
-                drawer.close();
-            }
+            drawer.toFront();
+        });
+        drawer.setOnDrawerClosed((event) -> {
+            drawer.toBack();
+            task.setRate(task.getRate() * -1);
+            task.play();
         });
     }
 
