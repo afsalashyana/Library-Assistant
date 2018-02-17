@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import library.assistant.alert.AlertMaker;
 import library.assistant.util.LibraryAssistantUtil;
 
 public class AboutController implements Initializable {
@@ -25,7 +26,7 @@ public class AboutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        AlertMaker.showTrayMessage(String.format("Hello %s!", System.getProperty("user.name")), "Thanks for trying out Library Assistant");
     }
 
     private void loadWebpage(String url) {

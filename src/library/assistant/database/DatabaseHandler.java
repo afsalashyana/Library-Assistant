@@ -262,7 +262,7 @@ public final class DatabaseHandler {
             rs = execQuery(qu2);
             if (rs.next()) {
                 int count = rs.getInt(1);
-                data.add(new PieChart.Data("Members with books (" + count + ")", count));
+                data.add(new PieChart.Data("Active (" + count + ")", count));
             }
         } catch (Exception e) {
             e.printStackTrace();

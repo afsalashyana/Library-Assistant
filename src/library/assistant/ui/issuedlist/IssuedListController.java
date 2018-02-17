@@ -4,7 +4,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -27,7 +26,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.settings.Preferences;
-import library.assistant.ui.listmember.MemberListController;
+import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.util.LibraryAssistantUtil;
 
 /*
@@ -35,7 +34,8 @@ import library.assistant.util.LibraryAssistantUtil;
  */
 public class IssuedListController implements Initializable {
 
-    ObservableList<IssueInfo> list = FXCollections.observableArrayList();
+    private ObservableList<IssueInfo> list = FXCollections.observableArrayList();
+    private BookReturnCallback callback;
 
     @FXML
     private TableView<IssueInfo> tableView;
@@ -73,6 +73,10 @@ public class IssuedListController implements Initializable {
         daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
         fineCol.setCellValueFactory(new PropertyValueFactory<>("fine"));
         tableView.setItems(list);
+    }
+
+    public void setBookReturnCallback(BookReturnCallback callback) {
+        this.callback = callback;
     }
 
     private void loadData() {
@@ -135,6 +139,14 @@ public class IssuedListController implements Initializable {
 
     private Stage getStage() {
         return (Stage) tableView.getScene().getWindow();
+    }
+
+    @FXML
+    private void handleReturn(ActionEvent event) {
+        IssueInfo issueInfo = tableView.getSelectionModel().getSelectedItem();
+        if (issueInfo != null) {
+            callback.loadBookReturn(issueInfo.getBookID());
+        }
     }
 
     public static class IssueInfo {

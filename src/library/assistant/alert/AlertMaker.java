@@ -4,6 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.events.JFXDialogEvent;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.TrayIcon.MessageType;
+import java.awt.image.BufferedImage;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
@@ -18,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import library.assistant.util.LibraryAssistantUtil;
 
 public class AlertMaker {
@@ -126,5 +131,20 @@ public class AlertMaker {
             nodeToBeBlurred.setEffect(null);
         });
         nodeToBeBlurred.setEffect(blur);
+    }
+
+    public static void showTrayMessage(String title, String message) {
+        try {
+            SystemTray tray = SystemTray.getSystemTray();
+            BufferedImage image = ImageIO.read(AlertMaker.class.getResource(LibraryAssistantUtil.ICON_IMAGE_LOC));
+            TrayIcon trayIcon = new TrayIcon(image, "Library Assistant");
+            trayIcon.setImageAutoSize(true);
+            trayIcon.setToolTip("Library Assistant");
+            tray.add(trayIcon);
+            trayIcon.displayMessage(title, message, MessageType.INFO);
+            tray.remove(trayIcon);
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
     }
 }

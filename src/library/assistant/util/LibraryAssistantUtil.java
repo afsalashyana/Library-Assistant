@@ -28,16 +28,19 @@ import library.assistant.ui.main.MainController;
 
 public class LibraryAssistantUtil {
 
-    private static final String IMAGE_LOC = "/resources/icon.png";
+    public static final String ICON_IMAGE_LOC = "/resources/icon.png";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
 
     public static void setStageIcon(Stage stage) {
-        stage.getIcons().add(new Image(IMAGE_LOC));
+        stage.getIcons().add(new Image(ICON_IMAGE_LOC));
     }
 
-    public static void loadWindow(URL loc, String title, Stage parentStage) {
+    public static Object loadWindow(URL loc, String title, Stage parentStage) {
+        Object controller = null;
         try {
-            Parent parent = FXMLLoader.load(loc);
+            FXMLLoader loader = new FXMLLoader(loc);
+            Parent parent = loader.load();
+            controller = loader.getController();
             Stage stage = null;
             if (parentStage != null) {
                 stage = parentStage;
@@ -51,6 +54,7 @@ public class LibraryAssistantUtil {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return controller;
     }
 
     public static Float getFineAmount(int totalDays) {
@@ -62,9 +66,8 @@ public class LibraryAssistantUtil {
         }
         return fine;
     }
-    
-    public static void initPDFExprot(StackPane rootPane, Node contentPane, Stage stage, List<List> data)
-    {
+
+    public static void initPDFExprot(StackPane rootPane, Node contentPane, Stage stage, List<List> data) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as PDF");
         FileChooser.ExtensionFilter extFilter
@@ -86,9 +89,8 @@ public class LibraryAssistantUtil {
             AlertMaker.showMaterialDialog(rootPane, contentPane, Arrays.asList(okayBtn, openBtn), "Completed", "Member data has been exported.");
         }
     }
-    
-    public static String formatDateTimeString(Date date)
-    {
+
+    public static String formatDateTimeString(Date date) {
         return DATE_FORMAT.format(date);
     }
 }

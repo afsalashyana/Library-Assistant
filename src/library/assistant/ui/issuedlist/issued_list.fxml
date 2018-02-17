@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-
-<StackPane fx:id="rootPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.issuedlist.IssuedListController">
+<StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.issuedlist.IssuedListController">
    <children>
       <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="546.0" prefWidth="789.0" stylesheets="@../../../../resources/dark-theme.css">
          <children>
@@ -27,6 +26,7 @@
                <contextMenu>
                   <ContextMenu styleClass="table-context">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleReturn" text="Return this" />
                         <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh" />
                      </items>
                   </ContextMenu>

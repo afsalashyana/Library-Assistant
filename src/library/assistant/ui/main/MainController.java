@@ -35,11 +35,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.main.toolbar.ToolbarController;
 import library.assistant.util.LibraryAssistantUtil;
 
-public class MainController implements Initializable {
+public class MainController implements Initializable, BookReturnCallback {
 
     private static final String BOOK_NOT_AVAILABLE = "Not Available";
     private static final String NO_SUCH_BOOK_AVAILABLE = "No Such Book Available";
@@ -363,9 +365,13 @@ public class MainController implements Initializable {
         AlertMaker.showMaterialDialog(rootPane, rootAnchorPane, Arrays.asList(yesButton, noButton), "Confirm Renew Operation", "Are you sure want to renew the book ?");
     }
 
+    private Stage getStage() {
+        return (Stage) rootPane.getScene().getWindow();
+    }
+
     @FXML
     private void handleMenuClose(ActionEvent event) {
-        ((Stage) rootPane.getScene().getWindow()).close();
+        getStage().close();
     }
 
     @FXML
@@ -393,15 +399,23 @@ public class MainController implements Initializable {
     }
 
     @FXML
+    private void handleMenuSettings(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/settings/settings.fxml"), "Settings", null);
+    }
+
+    @FXML
     private void handleMenuFullScreen(ActionEvent event) {
-        Stage stage = ((Stage) rootPane.getScene().getWindow());
+        Stage stage = getStage();
         stage.setFullScreen(!stage.isFullScreen());
     }
 
     private void initDrawer() {
         try {
-            VBox toolbar = FXMLLoader.load(getClass().getResource("/library/assistant/ui/main/toolbar/toolbar.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/library/assistant/ui/main/toolbar/toolbar.fxml"));
+            VBox toolbar = loader.load();
             drawer.setSidePane(toolbar);
+            ToolbarController controller = loader.getController();
+            controller.setBookReturnCallback(this);
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -495,6 +509,18 @@ public class MainController implements Initializable {
         return bookIDInput.getText().isEmpty() || memberIDInput.getText().isEmpty()
                 || memberName.getText().isEmpty() || bookName.getText().isEmpty()
                 || bookName.getText().equals(NO_SUCH_BOOK_AVAILABLE) || memberName.getText().equals(NO_SUCH_MEMBER_AVAILABLE);
+    }
+
+    @Override
+    public void loadBookReturn(String bookID) {
+        this.bookID.setText(bookID);
+        mainTabPane.getSelectionModel().select(renewTab);
+        loadBookInfo2(null);
+        getStage().toFront();
+        if(drawer.isShown())
+        {
+            drawer.close();
+        }
     }
 
 }

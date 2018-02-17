@@ -5,9 +5,17 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import library.assistant.ui.callback.BookReturnCallback;
+import library.assistant.ui.issuedlist.IssuedListController;
 import library.assistant.util.LibraryAssistantUtil;
 
 public class ToolbarController implements Initializable {
+
+    private BookReturnCallback callback;
+
+    public void setBookReturnCallback(BookReturnCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -41,7 +49,11 @@ public class ToolbarController implements Initializable {
 
     @FXML
     private void loadIssuedBookList(ActionEvent event) {
-        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/issuedlist/issued_list.fxml"), "Issued Book List", null);
+        Object controller = LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/issuedlist/issued_list.fxml"), "Issued Book List", null);
+        if (controller != null) {
+            IssuedListController cont = (IssuedListController) controller;
+            cont.setBookReturnCallback(callback);
+        }
     }
 
 }
