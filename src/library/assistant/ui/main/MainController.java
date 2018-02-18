@@ -22,6 +22,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,7 +39,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.alert.AlertMaker;
+import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.issuedlist.IssuedListController;
 import library.assistant.ui.main.toolbar.ToolbarController;
 import library.assistant.util.LibraryAssistantUtil;
 
@@ -133,18 +137,23 @@ public class MainController implements Initializable, BookReturnCallback {
         enableDisableGraph(false);
 
         String id = bookIDInput.getText();
-        String qu = "SELECT * FROM BOOK WHERE id = '" + id + "'";
-        ResultSet rs = databaseHandler.execQuery(qu);
+        ResultSet rs = DataHelper.getBookInfoWithIssueData(id);
         Boolean flag = false;
         try {
-            while (rs.next()) {
+            if (rs.next()) {
                 String bName = rs.getString("title");
                 String bAuthor = rs.getString("author");
                 Boolean bStatus = rs.getBoolean("isAvail");
+                Timestamp issuedOn = rs.getTimestamp("issueTime");
 
                 bookName.setText(bName);
                 bookAuthor.setText(bAuthor);
-                String status = (bStatus) ? BOOK_AVAILABLE : BOOK_NOT_AVAILABLE;
+                String status = (bStatus) ? BOOK_AVAILABLE : String.format("Issued on %s", LibraryAssistantUtil.getDateString(new Date(issuedOn.getTime())));
+                if (!bStatus) {
+                    bookStatus.getStyleClass().add("not-available");
+                } else {
+                    bookStatus.getStyleClass().remove("not-available");
+                }
                 bookStatus.setText(status);
 
                 flag = true;
@@ -389,10 +398,6 @@ public class MainController implements Initializable, BookReturnCallback {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/listbook/book_list.fxml"), "Book List", null);
     }
 
-    private void handleMenuViewMember(ActionEvent event) {
-        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/listmember/member_list.fxml"), "Member List", null);
-    }
-
     @FXML
     private void handleAboutMenu(ActionEvent event) {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/about/about.fxml"), "About Me", null);
@@ -401,6 +406,20 @@ public class MainController implements Initializable, BookReturnCallback {
     @FXML
     private void handleMenuSettings(ActionEvent event) {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/settings/settings.fxml"), "Settings", null);
+    }
+
+    @FXML
+    private void handleMenuViewMemberList(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/listmember/member_list.fxml"), "Member List", null);
+    }
+
+    @FXML
+    private void handleIssuedList(ActionEvent event) {
+        Object controller = LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/issuedlist/issued_list.fxml"), "Issued Book List", null);
+        if (controller != null) {
+            IssuedListController cont = (IssuedListController) controller;
+            cont.setBookReturnCallback(this);
+        }
     }
 
     @FXML
@@ -517,8 +536,7 @@ public class MainController implements Initializable, BookReturnCallback {
         mainTabPane.getSelectionModel().select(renewTab);
         loadBookInfo2(null);
         getStage().toFront();
-        if(drawer.isShown())
-        {
+        if (drawer.isShown()) {
             drawer.close();
         }
     }

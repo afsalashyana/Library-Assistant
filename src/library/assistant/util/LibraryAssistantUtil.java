@@ -29,7 +29,8 @@ import library.assistant.ui.main.MainController;
 public class LibraryAssistantUtil {
 
     public static final String ICON_IMAGE_LOC = "/resources/icon.png";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+    private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
     public static void setStageIcon(Stage stage) {
         stage.getIcons().add(new Image(ICON_IMAGE_LOC));
@@ -91,6 +92,10 @@ public class LibraryAssistantUtil {
     }
 
     public static String formatDateTimeString(Date date) {
+        return DATE_TIME_FORMAT.format(date);
+    }
+
+    public static String getDateString(Date date) {
         return DATE_FORMAT.format(date);
     }
 }

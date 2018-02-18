@@ -78,4 +78,17 @@ public class DataHelper {
         }
         return false;
     }
+
+    public static ResultSet getBookInfoWithIssueData(String id) {
+        try {
+            String query = "SELECT BOOK.title, BOOK.author, BOOK.isAvail, ISSUE.issueTime FROM BOOK LEFT JOIN ISSUE on BOOK.id = ISSUE.bookID where BOOK.id = ?";
+            PreparedStatement stmt = DatabaseHandler.getInstance().getConnection().prepareStatement(query);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

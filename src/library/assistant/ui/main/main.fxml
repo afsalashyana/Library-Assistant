@@ -236,7 +236,8 @@
                   <Menu mnemonicParsing="false" text="View">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuViewBook" text="Book List" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuAddMember" text="Member List" />
+                        <MenuItem mnemonicParsing="false" text="Member List" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleIssuedList" text="Issued Book List" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuFullScreen" text="Full Screen" />
                      </items>
                   </Menu>

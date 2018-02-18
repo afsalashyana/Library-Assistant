@@ -260,3 +260,12 @@
     -fx-text-fill: white;
     -fx-padding: 20px 0 0 0;
 }
+
+
+/*Dashboard label*/
+.not-available 
+{
+    -fx-background-radius: 5px;
+    -fx-fill: derive(blue, 80%);
+    -fx-cursor: hand;
+}
