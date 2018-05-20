@@ -2,3 +2,4 @@
 /dist/
 /database/
 derby.log
+logs/
