@@ -3,16 +3,19 @@ package library.assistant.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import library.assistant.data.wrapper.Book;
 import library.assistant.ui.listmember.MemberListController.Member;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
  * @author afsal
  */
 public class DataHelper {
+
+    private final static Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
 
     public static boolean insertNewBook(Book book) {
         try {
@@ -24,8 +27,9 @@ public class DataHelper {
             statement.setString(4, book.getPublisher());
             statement.setBoolean(5, book.getAvailability());
             return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -39,8 +43,9 @@ public class DataHelper {
             statement.setString(3, member.getMobile());
             statement.setString(4, member.getEmail());
             return statement.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            Logger.getLogger(DataHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -56,8 +61,9 @@ public class DataHelper {
                 System.out.println(count);
                 return (count > 0);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -73,8 +79,9 @@ public class DataHelper {
                 System.out.println(count);
                 return (count > 0);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -86,8 +93,9 @@ public class DataHelper {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return null;
     }

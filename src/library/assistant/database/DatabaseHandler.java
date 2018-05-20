@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -21,12 +19,17 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import library.assistant.ui.listbook.BookListController.Book;
 import library.assistant.ui.listmember.MemberListController;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public final class DatabaseHandler {
+
+    private final static Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
 
     private static DatabaseHandler handler = null;
 
@@ -69,12 +72,14 @@ public final class DatabaseHandler {
             }
             if (tableData.isEmpty()) {
                 System.out.println("Tables are already loaded");
-            } else {
+            }
+            else {
                 System.out.println("Inflating new tables.");
                 createTables(tableData);
             }
-        } catch (Exception ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (Exception ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
     }
 
@@ -82,7 +87,8 @@ public final class DatabaseHandler {
         try {
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
             conn = DriverManager.getConnection(DB_URL);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Cant load database", "Database Error", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
@@ -107,10 +113,12 @@ public final class DatabaseHandler {
         try {
             stmt = conn.createStatement();
             result = stmt.executeQuery(query);
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
             return null;
-        } finally {
+        }
+        finally {
         }
         return result;
     }
@@ -120,11 +128,13 @@ public final class DatabaseHandler {
             stmt = conn.createStatement();
             stmt.execute(qu);
             return true;
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error:" + ex.getMessage(), "Error Occured", JOptionPane.ERROR_MESSAGE);
             System.out.println("Exception at execQuery:dataHandler" + ex.getLocalizedMessage());
             return false;
-        } finally {
+        }
+        finally {
         }
     }
 
@@ -137,8 +147,9 @@ public final class DatabaseHandler {
             if (res == 1) {
                 return true;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -154,8 +165,9 @@ public final class DatabaseHandler {
                 System.out.println(count);
                 return (count > 0);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -169,8 +181,9 @@ public final class DatabaseHandler {
             if (res == 1) {
                 return true;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -186,8 +199,9 @@ public final class DatabaseHandler {
                 System.out.println(count);
                 return (count > 0);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -202,8 +216,9 @@ public final class DatabaseHandler {
             stmt.setString(4, book.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -218,8 +233,9 @@ public final class DatabaseHandler {
             stmt.setString(4, member.getId());
             int res = stmt.executeUpdate();
             return (res > 0);
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
     }
@@ -243,7 +259,8 @@ public final class DatabaseHandler {
                 int count = rs.getInt(1);
                 data.add(new PieChart.Data("Issued Books (" + count + ")", count));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return data;
@@ -264,7 +281,8 @@ public final class DatabaseHandler {
                 int count = rs.getInt(1);
                 data.add(new PieChart.Data("Active (" + count + ")", count));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
         return data;

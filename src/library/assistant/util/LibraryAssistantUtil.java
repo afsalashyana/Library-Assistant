@@ -45,14 +45,16 @@ public class LibraryAssistantUtil {
             Stage stage = null;
             if (parentStage != null) {
                 stage = parentStage;
-            } else {
+            }
+            else {
                 stage = new Stage(StageStyle.DECORATED);
             }
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
             setStageIcon(stage);
-        } catch (IOException ex) {
+        }
+        catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return controller;
@@ -82,7 +84,8 @@ public class LibraryAssistantUtil {
         openBtn.setOnAction((ActionEvent event1) -> {
             try {
                 Desktop.getDesktop().open(saveLoc);
-            } catch (Exception exp) {
+            }
+            catch (Exception exp) {
                 AlertMaker.showErrorMessage("Could not load file", "Cant load file");
             }
         });
@@ -93,6 +96,10 @@ public class LibraryAssistantUtil {
 
     public static String formatDateTimeString(Date date) {
         return DATE_TIME_FORMAT.format(date);
+    }
+
+    public static String formatDateTimeString(Long time) {
+        return DATE_TIME_FORMAT.format(new Date(time));
     }
 
     public static String getDateString(Date date) {

@@ -37,8 +37,15 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Long startTime = System.currentTimeMillis();
-        LOGGER.log(Level.INFO, "Library Assistant launched on {}", startTime);
+        LOGGER.log(Level.INFO, "Library Assistant launched on {}", LibraryAssistantUtil.formatDateTimeString(startTime));
         launch(args);
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                Long exitTime = System.currentTimeMillis();
+                LOGGER.log(Level.INFO, "Library Assistant is closing on {}. Used for {} ms", LibraryAssistantUtil.formatDateTimeString(startTime), exitTime);
+            }
+        });
     }
 
 }
