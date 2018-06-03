@@ -37,7 +37,7 @@ public class DataHelper {
     public static boolean insertNewMember(Member member) {
         try {
             PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
-                    "INSERT INTO BOOK(id,name,mobile,email) VALUES(?,?,?,?)");
+                    "INSERT INTO MEMBER(id,name,mobile,email) VALUES(?,?,?,?)");
             statement.setString(1, member.getId());
             statement.setString(2, member.getName());
             statement.setString(3, member.getMobile());

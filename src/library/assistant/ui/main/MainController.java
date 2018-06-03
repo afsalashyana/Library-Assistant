@@ -36,10 +36,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.alert.AlertMaker;
 import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.ui.issuedlist.IssuedListController;
 import library.assistant.ui.main.toolbar.ToolbarController;
 import library.assistant.util.LibraryAssistantUtil;
@@ -558,7 +558,7 @@ public class MainController implements Initializable, BookReturnCallback {
         mainTabPane.getSelectionModel().select(renewTab);
         loadBookInfo2(null);
         getStage().toFront();
-        if (drawer.isShown()) {
+        if (drawer.isOpened()) {
             drawer.close();
         }
     }
