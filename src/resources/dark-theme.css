@@ -30,7 +30,7 @@
     -fx-font-size: 13pt;
 }
 
-.button:hover{
+.button:hover, .button:focused{
     -fx-border-color: -fx-secondary;
     -fx-background-color: -fx-secondary;
     -fx-text-fill: -fx-primary;

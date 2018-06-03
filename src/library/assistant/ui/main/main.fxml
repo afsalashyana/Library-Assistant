@@ -114,7 +114,7 @@
                                           </HBox>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                              <children>
-                                                <JFXButton onAction="#loadIssueOperation" prefHeight="44.0" prefWidth="151.0" text="Issue">
+                                                <JFXButton fx:id="btnIssue" onAction="#loadIssueOperation" onKeyPressed="#handleIssueButtonKeyPress" prefHeight="44.0" prefWidth="151.0" text="Issue">
                                                    <HBox.margin>
                                                       <Insets />
                                                    </HBox.margin>
@@ -236,7 +236,7 @@
                   <Menu mnemonicParsing="false" text="View">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuViewBook" text="Book List" />
-                        <MenuItem mnemonicParsing="false" text="Member List" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleMenuViewMemberList" text="Member List" />
                         <MenuItem mnemonicParsing="false" onAction="#handleIssuedList" text="Issued Book List" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuFullScreen" text="Full Screen" />
                      </items>
