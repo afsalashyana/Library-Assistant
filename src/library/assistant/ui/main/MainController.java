@@ -24,6 +24,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -127,6 +128,7 @@ public class MainController implements Initializable, BookReturnCallback {
 
         initDrawer();
         initGraphs();
+        initComponents();
     }
 
     @FXML
@@ -568,6 +570,10 @@ public class MainController implements Initializable, BookReturnCallback {
         if (event.getCode() == KeyCode.ENTER) {
             loadIssueOperation(null);
         }
+    }
+
+    private void initComponents() {
+        mainTabPane.tabMinWidthProperty().bind(rootAnchorPane.widthProperty().divide(mainTabPane.getTabs().size()).subtract(15));
     }
 
 }

@@ -27,7 +27,7 @@
     -fx-border-color: -fx-secondary;
     -fx-border-radius: 20px;
     -fx-background-radius: 20px;
-    -fx-font-size: 13pt;
+    -fx-font-size: 12pt;
 }
 
 .button:hover, .button:focused{
@@ -39,7 +39,7 @@
 .text-field
 {
     -fx-text-fill: -fx-primarytext;
-    -fx-font-size : 13pt;
+    -fx-font-size : 12pt;
     -jfx-focus-color: -fx-secondary;
     -fx-text-fill: derive(-fx-secondary, 20%);
 }
@@ -58,14 +58,39 @@
 /*TablPane styling*/
 .tab{
     -fx-background-color: -fx-primary;
-    -fx-pref-width : 350;
-    -fx-pref-height : 60;
 }
 
 .tab-header-background{
     -fx-background-color: -fx-primary;
 }
 
+.tab-label{
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 10pt; 
+}
+
+
+.tab-main{
+    -fx-pref-height : 60;
+    -fx-max-height : 60;
+}
+
+.settings-tab{
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-padding: 5px 20px 5px 20px;
+}
+
+.settings-tab:selected{
+    -fx-background-color: -fx-secondary;
+}
+
+.settings-tab:selected .tab-label{
+    -fx-text-fill: -fx-primary;
+}
+
+.settings-tab .tab-header-background{
+    -fx-background-color: derive(-fx-primary, -50%);
+}
 /*Menu bar Styling*/
 .menu-bar{
     -fx-base : -fx-primary;
@@ -102,7 +127,7 @@
     -fx-text-fill: -fx-primary;
 }
 
-.toolbar-button:hover .glyph-icon
+.toolbar-button:hover .glyph-icon, .toolbar-button:hover .glyph-icon
 {
     -fx-fill: -fx-primary;
 }
@@ -251,6 +276,7 @@
 .jfx-layout-heading .label
 {
     -fx-text-fill: white;
+    -fx-font-size: 12pt;
 }
 .jfx-layout-body, .jfx-layout-actions{
     -fx-background-color: -fx-primary;   

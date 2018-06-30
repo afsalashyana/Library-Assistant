@@ -4,47 +4,104 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="354.0" prefWidth="400.0" styleClass="custom-pane" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.settings.SettingsController">
+<AnchorPane prefHeight="422.0" prefWidth="585.0" stylesheets="@../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.settings.SettingsController">
    <children>
-      <VBox prefHeight="354.0" prefWidth="400.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <JFXTextField fx:id="nDaysWithoutFine" labelFloat="true" promptText="No.of days to keep book without fine">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="finePerDay" labelFloat="true" promptText="Fine per day">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="username" labelFloat="true" promptText="username">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXPasswordField fx:id="password" labelFloat="true" promptText="password">
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </JFXPasswordField>
-            <HBox alignment="CENTER" prefHeight="43.0" prefWidth="334.0" spacing="25.0">
-               <children>
-                  <JFXButton onAction="#handleSaveButtonAction" prefHeight="100.0" prefWidth="100.0" text="Save" />
-                  <JFXButton onAction="#handleCancelButtonAction" prefHeight="100.0" prefWidth="100.0" text="Cancel" />
-               </children>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-         </padding>
-      </VBox>
+      <TabPane prefHeight="414.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab closable="false" styleClass="settings-tab" text="Basic">
+               <content>
+                  <AnchorPane id="AnchorPane" prefHeight="304.0" prefWidth="402.0" styleClass="custom-pane" stylesheets="@../../../resources/dark-theme.css">
+                     <children>
+                        <VBox prefHeight="354.0" prefWidth="400.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <JFXTextField fx:id="nDaysWithoutFine" labelFloat="true" promptText="No.of days to keep book without fine">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="finePerDay" labelFloat="true" promptText="Fine per day">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="username" labelFloat="true" promptText="Username">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXPasswordField fx:id="password" labelFloat="true" promptText="Password">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXPasswordField>
+                              <HBox alignment="CENTER" prefHeight="43.0" prefWidth="512.0" spacing="25.0">
+                                 <children>
+                                    <JFXButton onAction="#handleSaveButtonAction" prefHeight="100.0" prefWidth="100.0" text="Save" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab closable="false" styleClass="settings-tab" text="Mail Server">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="custom-pane">
+                     <children>
+                        <VBox prefHeight="385.0" prefWidth="585.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <JFXTextField fx:id="serverName" labelFloat="true" promptText="SMTP Server Name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="25.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="smtpPort" labelFloat="true" promptText="SMTP Port">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="emailAddress" labelFloat="true" promptText="Email Address">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXTextField>
+                              <JFXPasswordField fx:id="password" labelFloat="true" promptText="Password">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </JFXPasswordField>
+                              <HBox alignment="CENTER" prefHeight="43.0" prefWidth="512.0" spacing="25.0">
+                                 <children>
+                                    <JFXButton onAction="#handleTestMailAction" prefHeight="43.0" prefWidth="183.0" text="Send Test Mail" />
+                                    <JFXButton onAction="#saveMailServerConfuration" prefHeight="100.0" prefWidth="100.0" text="Save" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
