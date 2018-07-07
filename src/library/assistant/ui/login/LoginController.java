@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import library.assistant.settings.Preferences;
+import library.assistant.ui.settings.Preferences;
 import library.assistant.util.LibraryAssistantUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.Level;

@@ -25,7 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import library.assistant.database.DatabaseHandler;
-import library.assistant.settings.Preferences;
+import library.assistant.ui.settings.Preferences;
 import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.util.LibraryAssistantUtil;
 

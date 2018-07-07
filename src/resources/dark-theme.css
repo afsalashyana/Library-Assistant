@@ -295,3 +295,21 @@
     -fx-fill: derive(blue, 80%);
     -fx-cursor: hand;
 }
+
+/*Checkbox*/
+
+.checkbox-main{
+    -fx-text-fill: -fx-secondary; 
+    -jfx-checked-color: -fx-primary;
+    -fx-font-size: 10pt;
+}
+
+/*Progrss bar*/
+
+.progress-bar-main .track{
+    -fx-background-color: -fx-primary;
+}
+.progress-bar-main .bar{
+    -fx-background-color: -fx-secondary;
+    -fx-padding: 5px;
+}

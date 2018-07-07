@@ -426,7 +426,7 @@ public class MainController implements Initializable, BookReturnCallback {
 
     @FXML
     private void handleMenuSettings(ActionEvent event) {
-        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/settings/settings.fxml"), "Settings", null);
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/settings/settings.fxml"), "Settings", null);
     }
 
     @FXML

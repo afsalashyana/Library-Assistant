@@ -1,4 +1,4 @@
-package library.assistant.settings;
+package library.assistant.ui.settings;
 
 import com.google.gson.Gson;
 import java.io.FileNotFoundException;

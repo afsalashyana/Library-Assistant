@@ -1,4 +1,4 @@
-package library.assistant.data.wrapper;
+package library.assistant.data.model;
 
 /**
  *

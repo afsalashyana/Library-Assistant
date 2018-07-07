@@ -3,7 +3,9 @@ package library.assistant.database;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import library.assistant.data.wrapper.Book;
+import java.sql.Statement;
+import library.assistant.data.model.Book;
+import library.assistant.data.model.MailServerInfo;
 import library.assistant.ui.listmember.MemberListController.Member;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +29,7 @@ public class DataHelper {
             statement.setString(4, book.getPublisher());
             statement.setBoolean(5, book.getAvailability());
             return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
@@ -43,8 +44,7 @@ public class DataHelper {
             statement.setString(3, member.getMobile());
             statement.setString(4, member.getEmail());
             return statement.executeUpdate() > 0;
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
@@ -61,8 +61,7 @@ public class DataHelper {
                 System.out.println(count);
                 return (count > 0);
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
@@ -79,8 +78,7 @@ public class DataHelper {
                 System.out.println(count);
                 return (count > 0);
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, "{}", ex);
         }
         return false;
@@ -93,8 +91,52 @@ public class DataHelper {
             stmt.setString(1, id);
             ResultSet rs = stmt.executeQuery();
             return rs;
+        } catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
         }
-        catch (SQLException ex) {
+        return null;
+    }
+
+    public static void wipeTable(String tableName) {
+        try {
+            Statement statement = DatabaseHandler.getInstance().getConnection().createStatement();
+            statement.execute("DELETE FROM " + tableName + " WHERE TRUE");
+        } catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
+        }
+    }
+
+    public static boolean updateMailServerInfo(MailServerInfo mailServerInfo) {
+        try {
+            wipeTable("MAIL_SERVER_INFO");
+            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+                    "INSERT INTO MAIL_SERVER_INFO(server_name,server_port,user_email,user_password,ssl_enabled) VALUES(?,?,?,?,?)");
+            statement.setString(1, mailServerInfo.getMailServer());
+            statement.setInt(2, mailServerInfo.getPort());
+            statement.setString(3, mailServerInfo.getEmailID());
+            statement.setString(4, mailServerInfo.getPassword());
+            statement.setBoolean(5, mailServerInfo.getSslEnabled());
+            return statement.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            LOGGER.log(Level.ERROR, "{}", ex);
+        }
+        return false;
+    }
+
+    public static MailServerInfo loadMailServerInfo() {
+        try {
+            String checkstmt = "SELECT * FROM MAIL_SERVER_INFO";
+            PreparedStatement stmt = DatabaseHandler.getInstance().getConnection().prepareStatement(checkstmt);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                String mailServer = rs.getString("server_name");
+                Integer port = rs.getInt("server_port");
+                String emailID = rs.getString("user_email");
+                String userPassword = rs.getString("user_password");
+                Boolean sslEnabled = rs.getBoolean("ssl_enabled");
+                return new MailServerInfo(mailServer, port, emailID, userPassword, sslEnabled);
+            }
+        } catch (SQLException ex) {
             LOGGER.log(Level.ERROR, "{}", ex);
         }
         return null;

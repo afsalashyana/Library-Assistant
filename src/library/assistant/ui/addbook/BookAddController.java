@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import library.assistant.alert.AlertMaker;
-import library.assistant.data.wrapper.Book;
+import library.assistant.data.model.Book;
 import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.listbook.BookListController;

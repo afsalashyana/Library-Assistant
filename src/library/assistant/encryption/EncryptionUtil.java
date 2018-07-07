@@ -109,7 +109,7 @@ public class EncryptionUtil {
         }
     }
 
-    public static byte[] generateSecureKey() throws NoSuchAlgorithmException {
+    private static byte[] generateSecureKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance(SECRET_KEY_SPEC);
         keyGen.init(128);
         SecretKey secretKey = keyGen.generateKey();
@@ -117,14 +117,14 @@ public class EncryptionUtil {
         return data;
     }
 
-    public static byte[] prepareIV() throws NoSuchAlgorithmException {
+    private static byte[] prepareIV() throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-512");
         String randomVal = String.valueOf(new Random(System.currentTimeMillis()).nextLong());
         byte[] hash = digest.digest(randomVal.getBytes(StandardCharsets.UTF_8));
         return Arrays.copyOfRange(hash, 0, 16);
     }
 
-    public static void writeKey(CipherSpec spec) throws Exception {
+    private static void writeKey(CipherSpec spec) throws Exception {
         KEY_STORE.mkdirs();
         if (KEY_STORE.exists()) {
             LOGGER.log(Level.INFO, "Clearing existing encryption info");
@@ -140,7 +140,7 @@ public class EncryptionUtil {
         }
     }
 
-    public static CipherSpec getCipherSpec() throws Exception {
+    private static CipherSpec getCipherSpec() throws Exception {
         if (KEY_STORE.exists()) {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(KEY_STORE))) {
                 return (CipherSpec) in.readObject();

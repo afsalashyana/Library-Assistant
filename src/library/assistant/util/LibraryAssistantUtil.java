@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import library.assistant.alert.AlertMaker;
 import library.assistant.export.pdf.ListToPDF;
-import library.assistant.settings.Preferences;
+import library.assistant.ui.settings.Preferences;
 import library.assistant.ui.main.MainController;
 
 public class LibraryAssistantUtil {
