@@ -9,7 +9,7 @@
     -fx-primarytext : #B2B2B2;
     -fx-blue: #1976D2;
     -fx-red: #FF0000;
-    -fx-green:#2E7D32;
+    -fx-color-1:#1976D2;
 }
 
 .root{
@@ -146,15 +146,15 @@
 
 /*Dialog styling*/
 .dialog-button{
-    -fx-border-color: -fx-green;
+    -fx-border-color: -fx-color-1;
     -fx-text-fill: white;
     -fx-border-radius: 1px;
     -fx-background-radius: 3px;
 }
 
 .dialog-button:hover{
-    -fx-background-color: -fx-green;
-    -fx-border-color: derive(-fx-green, -20%);
+    -fx-background-color: -fx-color-1;
+    -fx-border-color: derive(-fx-color-1, -20%);
     -fx-text-fill: white;
 }
 
@@ -195,6 +195,7 @@
 .table-view{
     -fx-background-color: derive(-fx-primary, 10%);
     -fx-font-size: 16px; 
+    -fx-border-color: derive(-fx-secondary, -60%);
 }
 .table-view:focused{
     -fx-background-color: derive(-fx-primary, 20%);
@@ -271,7 +272,7 @@
 /*JFXDialog styling*/
 .jfx-layout-heading
 {
-    -fx-background-color: -fx-green;
+    -fx-background-color: -fx-color-1;
 }
 .jfx-layout-heading .label
 {
@@ -312,4 +313,10 @@
 .progress-bar-main .bar{
     -fx-background-color: -fx-secondary;
     -fx-padding: 5px;
+}
+
+.common-label{
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 12pt;
 }
