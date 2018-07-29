@@ -30,6 +30,7 @@ import library.assistant.ui.main.MainController;
 public class LibraryAssistantUtil {
 
     public static final String ICON_IMAGE_LOC = "/resources/icon.png";
+    public static final String MAIL_CONTENT_LOC = "/resources/mail_content.html";
     private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -46,16 +47,14 @@ public class LibraryAssistantUtil {
             Stage stage = null;
             if (parentStage != null) {
                 stage = parentStage;
-            }
-            else {
+            } else {
                 stage = new Stage(StageStyle.DECORATED);
             }
             stage.setTitle(title);
             stage.setScene(new Scene(parent));
             stage.show();
             setStageIcon(stage);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return controller;
@@ -85,8 +84,7 @@ public class LibraryAssistantUtil {
         openBtn.setOnAction((ActionEvent event1) -> {
             try {
                 Desktop.getDesktop().open(saveLoc);
-            }
-            catch (Exception exp) {
+            } catch (Exception exp) {
                 AlertMaker.showErrorMessage("Could not load file", "Cant load file");
             }
         });
@@ -106,11 +104,10 @@ public class LibraryAssistantUtil {
     public static String getDateString(Date date) {
         return DATE_FORMAT.format(date);
     }
-    
-    public static boolean validateEmailAddress(String emailID)
-    {
+
+    public static boolean validateEmailAddress(String emailID) {
         String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-		+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(emailID).matches();
     }

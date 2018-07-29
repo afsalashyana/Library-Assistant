@@ -10,11 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +29,7 @@ import library.assistant.alert.AlertMaker;
 import library.assistant.data.model.MailServerInfo;
 import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.ui.notifoverdue.emailsender.EmailSenderController;
 import library.assistant.ui.settings.Preferences;
 import library.assistant.util.LibraryAssistantUtil;
 
@@ -123,6 +120,12 @@ public class OverdueNotificationController implements Initializable {
 
     @FXML
     private void handleSendNotificationAction(ActionEvent event) {
+        Object controller = LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/notifoverdue/emailsender/email_sender.fxml"), "Notify Overdue", null);
+        if (controller != null) {
+            EmailSenderController cont = (EmailSenderController) controller;
+            cont.setNotifRequestData(list);
+            cont.start();
+        }
     }
 
     private void checkForMailServerConfig() {
@@ -131,7 +134,8 @@ public class OverdueNotificationController implements Initializable {
             ((Stage) rootPane.getScene().getWindow()).close();
         });
         MailServerInfo mailServerInfo = DataHelper.loadMailServerInfo();
-        if (mailServerInfo == null || mailServerInfo.validate()) {
+        System.out.println(mailServerInfo);
+        if (mailServerInfo == null || !mailServerInfo.validate()) {
             System.out.println("Mail server not configured");
             AlertMaker.showMaterialDialog(rootPane, contentPane, ImmutableList.of(button), "Mail server is not configured", "Please configure mail server first.\nIt is available under Settings");
         }
@@ -148,59 +152,6 @@ public class OverdueNotificationController implements Initializable {
                 item.setNotify(new_val);
             });
             return new SimpleObjectProperty<>(checkBox);
-        }
-    }
-
-    public static class NotificationItem {
-
-        private SimpleBooleanProperty notify;
-        private final SimpleStringProperty memberID;
-        private final SimpleStringProperty memberName;
-        private final SimpleStringProperty memberEmail;
-        private final SimpleStringProperty bookName;
-        private final SimpleIntegerProperty dayCount;
-        private final SimpleFloatProperty fineAmount;
-
-        public NotificationItem(boolean notify, String memberID, String memberName, String memberEmail, String bookName, int dayCount, float fineAmount) {
-            this.notify = new SimpleBooleanProperty(notify);
-            this.memberID = new SimpleStringProperty(memberID);
-            this.memberName = new SimpleStringProperty(memberName);
-            this.memberEmail = new SimpleStringProperty(memberEmail);
-            this.bookName = new SimpleStringProperty(bookName);
-            this.dayCount = new SimpleIntegerProperty(dayCount);
-            this.fineAmount = new SimpleFloatProperty(fineAmount);
-        }
-
-        public Boolean getNotify() {
-            return notify.get();
-        }
-
-        public String getMemberID() {
-            return memberID.get();
-        }
-
-        public String getMemberName() {
-            return memberName.get();
-        }
-
-        public String getMemberEmail() {
-            return memberEmail.get();
-        }
-
-        public String getBookName() {
-            return bookName.get();
-        }
-
-        public Integer getDayCount() {
-            return dayCount.get();
-        }
-
-        public String getFineAmount() {
-            return String.format("$ %.2f", fineAmount.get());
-        }
-
-        public void setNotify(Boolean val) {
-            notify.set(val);
         }
     }
 }

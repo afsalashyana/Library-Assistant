@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.notifoverdue.OverdueNotificationController">
    <children>
       <AnchorPane fx:id="contentPane" prefHeight="456.0" prefWidth="842.0" styleClass="custom-pane" stylesheets="@../../../../resources/dark-theme.css">
@@ -30,7 +29,7 @@
             <Label alignment="CENTER" layoutX="14.0" layoutY="12.0" prefHeight="25.0" prefWidth="808.0" styleClass="common-label" text="Notify users with overdue" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
             <HBox alignment="CENTER" layoutX="252.0" layoutY="392.0" prefHeight="39.0" prefWidth="462.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <JFXButton onAction="#handleSendNotificationAction" prefHeight="39.0" prefWidth="235.0" text="Send Notification Niow" />
+                  <JFXButton onAction="#handleSendNotificationAction" prefHeight="39.0" prefWidth="235.0" text="Send Notification Now" />
                </children>
             </HBox>
          </children>
