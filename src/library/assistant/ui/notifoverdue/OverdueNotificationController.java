@@ -8,8 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -110,7 +112,7 @@ public class OverdueNotificationController implements Initializable {
                 Integer days = Math.toIntExact(TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - issueTime.getTime())) + 1;
                 Float fine = LibraryAssistantUtil.getFineAmount(days);
 
-                NotificationItem item = new NotificationItem(true, memberID, memberName, email, bookTitle, days, fine);
+                NotificationItem item = new NotificationItem(true, memberID, memberName, email, bookTitle, LibraryAssistantUtil.getDateString(issueTime), days, fine);
                 list.add(item);
             }
         } catch (SQLException ex) {
@@ -120,10 +122,15 @@ public class OverdueNotificationController implements Initializable {
 
     @FXML
     private void handleSendNotificationAction(ActionEvent event) {
+        List<NotificationItem> selectedItems = list.stream().filter(item -> item.getNotify()).collect(Collectors.toList());
+        if (selectedItems.isEmpty()) {
+            AlertMaker.showErrorMessage("Nothing Selected", "Nothing selected to notify");
+            return;
+        }
         Object controller = LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/notifoverdue/emailsender/email_sender.fxml"), "Notify Overdue", null);
         if (controller != null) {
             EmailSenderController cont = (EmailSenderController) controller;
-            cont.setNotifRequestData(list);
+            cont.setNotifRequestData(selectedItems);
             cont.start();
         }
     }

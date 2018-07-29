@@ -1,14 +1,10 @@
 package library.assistant.ui.notifoverdue.emailsender;
 
 import com.jfoenix.controls.JFXProgressBar;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -26,6 +22,7 @@ import library.assistant.data.model.MailServerInfo;
 import library.assistant.database.DataHelper;
 import library.assistant.email.EmailUtil;
 import library.assistant.ui.notifoverdue.NotificationItem;
+import library.assistant.ui.settings.Preferences;
 import library.assistant.util.LibraryAssistantUtil;
 
 /**
@@ -40,7 +37,7 @@ public class EmailSenderController implements Initializable {
     @FXML
     private Text text;
 
-    private ObservableList<NotificationItem> list;
+    private List<NotificationItem> list;
     private StringBuilder emailText = new StringBuilder();
 
     @Override
@@ -56,7 +53,7 @@ public class EmailSenderController implements Initializable {
         }
     }
 
-    public void setNotifRequestData(ObservableList<NotificationItem> list) {
+    public void setNotifRequestData(List<NotificationItem> list) {
         this.list = list;
     }
 
@@ -85,18 +82,22 @@ public class EmailSenderController implements Initializable {
             Iterator iterator = list.iterator();
             while (iterator.hasNext() && flag.get()) {
                 count++;
-                updateUI(size, count);
                 NotificationItem item = (NotificationItem) iterator.next();
                 String reportDate = LibraryAssistantUtil.getDateString(new Date());
                 String bookName = item.getBookName();
-                String issueDate = "0";
+                String issueDate = item.getIssueDate();
                 Integer daysUsed = item.getDayCount();
-                String finePerDay = "0";
+                String finePerDay = String.valueOf(Preferences.getPreferences().getFinePerDay());
                 String amount = item.getFineAmount();
                 String emailContent = String.format(emailText.toString(), reportDate, bookName, issueDate, daysUsed, finePerDay, amount);
                 EmailUtil.sendMail(mailServerInfo, item.getMemberEmail(), emailContent, "Library Assistant Overdue Notification", this);
                 flag.set(false);
+                updateUI(size, count);
             }
+            Platform.runLater(() -> {
+                text.setText("Process Completed!");
+                progressBar.setProgress(1);
+            });
         }
 
         @Override
@@ -106,12 +107,9 @@ public class EmailSenderController implements Initializable {
         }
 
         private void updateUI(int size, int count) {
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    text.setText(String.format("Notifying %d/%d", count, size));
-                    progressBar.setProgress((double) count / (double) size);
-                }
+            Platform.runLater(() -> {
+                text.setText(String.format("Notifying %d/%d", count, size));
+                progressBar.setProgress((double) count / (double) size);
             });
         }
     }

@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class NotificationItem {
+
     private final SimpleBooleanProperty notify;
     private final SimpleStringProperty memberID;
     private final SimpleStringProperty memberName;
@@ -13,8 +14,9 @@ public class NotificationItem {
     private final SimpleStringProperty bookName;
     private final SimpleIntegerProperty dayCount;
     private final SimpleFloatProperty fineAmount;
+    private final SimpleStringProperty issueDate;
 
-    public NotificationItem(boolean notify, String memberID, String memberName, String memberEmail, String bookName, int dayCount, float fineAmount) {
+    public NotificationItem(boolean notify, String memberID, String memberName, String memberEmail, String bookName, String issueDate, int dayCount, float fineAmount) {
         this.notify = new SimpleBooleanProperty(notify);
         this.memberID = new SimpleStringProperty(memberID);
         this.memberName = new SimpleStringProperty(memberName);
@@ -22,6 +24,7 @@ public class NotificationItem {
         this.bookName = new SimpleStringProperty(bookName);
         this.dayCount = new SimpleIntegerProperty(dayCount);
         this.fineAmount = new SimpleFloatProperty(fineAmount);
+        this.issueDate = new SimpleStringProperty(issueDate);
     }
 
     public Boolean getNotify() {
@@ -54,5 +57,9 @@ public class NotificationItem {
 
     public void setNotify(Boolean val) {
         notify.set(val);
+    }
+
+    public String getIssueDate() {
+        return issueDate.get();
     }
 }
