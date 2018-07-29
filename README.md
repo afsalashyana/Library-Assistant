@@ -7,7 +7,22 @@ This is a library management software developed using JavaFX programming languag
   * [Apache Commons](https://commons.apache.org/) - For creating SHA hash
   * [GSon](https://github.com/google/gson) - JSON Library. Used for storing configuration
   * [FontawesomeFX](https://bitbucket.org/Jerady/fontawesomefx) - Icon library
-
+  * [Apache PDFBox](https://pdfbox.apache.org/) - PDF Export
+  * [JavaMail API](http://www.oracle.com/technetwork/java/javamail/index.html) - Email Notification
+  
+### New Features
+* Notify overdue via email.
+  <p align="center">
+   <img src=https://i.imgur.com/7UutZZQ.png>
+  </p>
+* Rich text email notification content.
+   <p align="center">
+    <img src=https://i.imgur.com/jj9Lk5G.png>
+   </p>
+* AES Encryption for Mail Server Configuration - AES/CBC/PKCS5Padding   
+   <p align="center">
+    <img src=https://i.imgur.com/WrWZqLr.png>
+   </p>
 ### Default Login Credentials
 | Username  | Password |
 | ------------- | ------------- |
