@@ -1,5 +1,6 @@
 /build/
 /dist/
 /database/
-derby.log
-logs/
+/derby.log
+/logs/
+/config.txt
