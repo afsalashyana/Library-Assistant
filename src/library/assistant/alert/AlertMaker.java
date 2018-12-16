@@ -14,6 +14,7 @@ import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.BoxBlur;
@@ -32,8 +33,7 @@ public class AlertMaker {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        LibraryAssistantUtil.setStageIcon(stage);
+        styleAlert(alert);
         alert.showAndWait();
     }
 
@@ -42,7 +42,7 @@ public class AlertMaker {
         alert.setTitle("Error");
         alert.setHeaderText(title);
         alert.setContentText(content);
-
+        styleAlert(alert);
         alert.showAndWait();
     }
 
@@ -74,6 +74,8 @@ public class AlertMaker {
         expContent.add(textArea, 0, 1);
 
         alert.getDialogPane().setExpandableContent(expContent);
+
+        styleAlert(alert);
         alert.showAndWait();
     }
 
@@ -146,5 +148,14 @@ public class AlertMaker {
         } catch (Exception exp) {
             exp.printStackTrace();
         }
+    }
+
+    private static void styleAlert(Alert alert) {
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        LibraryAssistantUtil.setStageIcon(stage);
+
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(AlertMaker.class.getResource("/resources/dark-theme.css").toExternalForm());
+        dialogPane.getStyleClass().add("custom-alert");
     }
 }

@@ -49,8 +49,8 @@
 
 .wrong-credentials
 {
-    -jfx-unfocus-color: -fx-red;
-    -jfx-focus-color: -fx-red;
+    -jfx-unfocus-color: #ef5350;
+    -jfx-focus-color: #ef5350;
 }
 
 /*Main Screen CSS Styling starts here*/
@@ -320,4 +320,31 @@
     -fx-background-color: transparent;
     -fx-text-fill: -fx-secondary;
     -fx-font-size: 12pt;
+}
+
+/*Alert Dialog*/
+
+.custom-alert{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: white;
+}
+.custom-alert > *.button-bar > *.container{
+    -fx-background-color: -fx-primary;
+}
+.custom-alert > *.label.content{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.custom-alert:header *.header-panel{
+    -fx-background-color: -fx-blue;
+}
+.custom-alert:header  .header-panel .label {
+    -fx-font-style: normal;
+    -fx-text-fill: white;
+}
+.custom-alert:header *.header-panel *.label{
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: -fx-primary;
 }

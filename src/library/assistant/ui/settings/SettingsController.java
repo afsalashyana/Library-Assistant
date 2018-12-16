@@ -2,18 +2,22 @@ package library.assistant.ui.settings;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
+import java.io.File;
 import java.net.URL;
 import java.security.InvalidParameterException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import library.assistant.alert.AlertMaker;
 import library.assistant.data.model.MailServerInfo;
 import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
+import library.assistant.database.export.DatabaseExporter;
 import library.assistant.ui.mail.TestMailController;
 import library.assistant.util.LibraryAssistantUtil;
 import org.apache.logging.log4j.Level;
@@ -42,6 +46,8 @@ public class SettingsController implements Initializable {
     private JFXPasswordField emailPassword;
     @FXML
     private JFXCheckBox sslCheckbox;
+    @FXML
+    private JFXSpinner progressSpinner;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -116,14 +122,27 @@ public class SettingsController implements Initializable {
 
     private void loadMailServerConfigurations() {
         MailServerInfo mailServerInfo = DataHelper.loadMailServerInfo();
-        if(mailServerInfo!=null)
-        {
+        if (mailServerInfo != null) {
             LOGGER.log(Level.INFO, "Mail server info loaded from DB");
             serverName.setText(mailServerInfo.getMailServer());
             smtpPort.setText(String.valueOf(mailServerInfo.getPort()));
             emailAddress.setText(mailServerInfo.getEmailID());
             emailPassword.setText(mailServerInfo.getPassword());
             sslCheckbox.setSelected(mailServerInfo.getSslEnabled());
+        }
+    }
+
+    @FXML
+    private void handleDatabaseExportAction(ActionEvent event) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select Location to Create Backup");
+        File selectedDirectory = directoryChooser.showDialog(getStage());
+        if (selectedDirectory == null) {
+            AlertMaker.showErrorMessage("Export cancelled", "No Valid Directory Found");
+        } else {
+            DatabaseExporter databaseExporter = new DatabaseExporter(selectedDirectory);
+            progressSpinner.visibleProperty().bind(databaseExporter.runningProperty());
+            new Thread(databaseExporter).start();
         }
     }
 }

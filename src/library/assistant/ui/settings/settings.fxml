@@ -3,21 +3,23 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="422.0" prefWidth="585.0" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.settings.SettingsController">
+<StackPane fx:id="rootContainer" prefHeight="459.0" prefWidth="581.0" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.settings.SettingsController">
    <children>
-      <TabPane prefHeight="414.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="414.0" prefWidth="400.0">
          <tabs>
             <Tab closable="false" styleClass="settings-tab" text="Basic">
                <content>
-                  <AnchorPane id="AnchorPane" prefHeight="304.0" prefWidth="402.0" styleClass="custom-pane" stylesheets="@../../../resources/dark-theme.css">
+                  <AnchorPane id="AnchorPane" prefHeight="304.0" prefWidth="402.0" styleClass="custom-pane">
                      <children>
                         <VBox prefHeight="354.0" prefWidth="400.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -59,8 +61,8 @@
                </content>
             </Tab>
             <Tab closable="false" styleClass="settings-tab" text="Mail Server">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="custom-pane">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="custom-pane">
                      <children>
                         <VBox prefHeight="385.0" prefWidth="585.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
@@ -101,9 +103,19 @@
                         </VBox>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
+            </Tab>
+            <Tab closable="false" styleClass="settings-tab" text="Export">
+               <content>
+                  <AnchorPane id="AnchorPane" prefHeight="304.0" prefWidth="402.0" styleClass="custom-pane">
+                     <children>
+                        <JFXButton layoutX="200.0" layoutY="129.0" onAction="#handleDatabaseExportAction" prefHeight="60.0" prefWidth="185.0" text="Export Database" />
+                        <JFXSpinner fx:id="progressSpinner" layoutX="268.0" layoutY="207.0" visible="false" />
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
          </tabs>
       </TabPane>
    </children>
-</AnchorPane>
+</StackPane>

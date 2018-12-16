@@ -111,4 +111,13 @@ public class LibraryAssistantUtil {
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(emailID).matches();
     }
+
+    public static void openFileWithDesktop(File file) {
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(LibraryAssistantUtil.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
