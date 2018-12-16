@@ -5,7 +5,7 @@ Project Library Assistant build script updated
 Project build script file jfx-impl.xml in nbproject sub-directory has not been recognized
 as compliant with this version of NetBeans JavaFX support module. To ensure correct
 and complete functionality within this NetBeans installation the script file has been
-backed up to jfx-impl_backup_1.xml and then updated to the currently supported state.
+backed up to jfx-impl_backup_2.xml and then updated to the currently supported state.
 
 FX Project build script auto-update may be triggered on project open either after
 NetBeans installation update or by manual changes in jfx-impl.xml. Please note that

@@ -93,6 +93,7 @@
 }
 /*Menu bar Styling*/
 .menu-bar{
+    -fx-font-size: 14;
     -fx-base : -fx-primary;
     -fx-background-color: -fx-primary;
 }

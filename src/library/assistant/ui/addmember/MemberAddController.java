@@ -64,13 +64,13 @@ public class MemberAddController implements Initializable {
             return;
         }
 
-        if (DataHelper.isMemberExists(mID)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate member id", "Member with same id exists.\nPlease use new ID");
+        if (isInEditMode) {
+            handleUpdateMember();
             return;
         }
 
-        if (isInEditMode) {
-            handleUpdateMember();
+        if (DataHelper.isMemberExists(mID)) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate member id", "Member with same id exists.\nPlease use new ID");
             return;
         }
 

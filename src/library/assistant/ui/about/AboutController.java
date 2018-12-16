@@ -19,10 +19,10 @@ import library.assistant.util.LibraryAssistantUtil;
 
 public class AboutController implements Initializable {
 
-    private static final String LINKED_IN = "https://in.linkedin.com/in/muhammedafsalvillan";
+    private static final String LINKED_IN = "https://www.linkedin.com/in/muhammedafsalvillan/";
     private static final String FACEBOOK = "http://facebook.com/afsalashyana";
     private static final String WEBSITE = "http://www.genuinecoder.com";
-    private static final String YOUTUBE = "https://www.youtube.com/GenuineCoder";
+    private static final String YOUTUBE = "https://www.youtube.com/c/GenuineCoder";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

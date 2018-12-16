@@ -35,13 +35,13 @@ public class BookAddController implements Initializable {
     private JFXButton saveButton;
     @FXML
     private JFXButton cancelButton;
-
-    DatabaseHandler databaseHandler;
     @FXML
     private StackPane rootPane;
-    private Boolean isInEditMode = Boolean.FALSE;
     @FXML
     private AnchorPane mainContainer;
+
+    private DatabaseHandler databaseHandler;
+    private Boolean isInEditMode = Boolean.FALSE;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -55,18 +55,18 @@ public class BookAddController implements Initializable {
         String bookName = title.getText();
         String bookPublisher = publisher.getText();
 
-        if (bookID.isEmpty() || bookAuthor.isEmpty() || bookName.isEmpty() || bookPublisher.isEmpty()) {
+        if (bookID.isEmpty() || bookAuthor.isEmpty() || bookName.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
-            return;
-        }
-
-        if (DataHelper.isBookExists(bookID)) {
-            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
             return;
         }
 
         if (isInEditMode) {
             handleEditOperation();
+            return;
+        }
+
+        if (DataHelper.isBookExists(bookID)) {
+            AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Duplicate book id", "Book with same Book ID exists.\nPlease use new ID");
             return;
         }
 

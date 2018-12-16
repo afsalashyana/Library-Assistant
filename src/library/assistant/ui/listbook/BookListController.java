@@ -148,7 +148,7 @@ public class BookListController implements Initializable {
             stage.show();
             LibraryAssistantUtil.setStageIcon(stage);
 
-            stage.setOnCloseRequest((e) -> {
+            stage.setOnHiding((e) -> {
                 handleRefresh(new ActionEvent());
             });
 

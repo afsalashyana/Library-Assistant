@@ -1,8 +1,5 @@
 package library.assistant.ui.listmember;
 
-import com.jfoenix.controls.JFXButton;
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -30,12 +27,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import library.assistant.alert.AlertMaker;
 import library.assistant.database.DatabaseHandler;
-import library.assistant.export.pdf.ListToPDF;
 import library.assistant.ui.addbook.BookAddController;
 import library.assistant.ui.addmember.MemberAddController;
 import library.assistant.ui.main.MainController;
@@ -155,7 +150,7 @@ public class MemberListController implements Initializable {
             stage.show();
             LibraryAssistantUtil.setStageIcon(stage);
 
-            stage.setOnCloseRequest((e) -> {
+            stage.setOnHiding((e) -> {
                 handleRefresh(new ActionEvent());
             });
 

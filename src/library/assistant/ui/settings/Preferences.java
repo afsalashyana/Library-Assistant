@@ -86,8 +86,8 @@ public class Preferences {
         try {
             preferences = gson.fromJson(new FileReader(CONFIG_FILE), Preferences.class);
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(Preferences.class.getName()).info("Config file is missing. Creating new one with default config");
             initConfig();
-            Logger.getLogger(Preferences.class.getName()).log(Level.SEVERE, null, ex);
         }
         return preferences;
     }
