@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.listbook.BookListController">
+<StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.listbook.BookListController">
    <children>
       <AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="525.0" prefWidth="798.0" stylesheets="@../../../../resources/dark-theme.css">
          <children>
@@ -25,12 +26,16 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <contextMenu>
-                  <ContextMenu styleClass="table-context">
+                  <ContextMenu>
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleRefresh" text="Refresh" />
                       <MenuItem mnemonicParsing="false" onAction="#handleBookEditOption" text="Edit" />
                         <MenuItem mnemonicParsing="false" onAction="#handleBookDeleteOption" text="Delete" />
                     </items>
+                     <styleClass>
+                        <String fx:value="table-context" />
+                        <String fx:value="colored-context-menu" />
+                     </styleClass>
                   </ContextMenu>
                </contextMenu>
             </TableView>

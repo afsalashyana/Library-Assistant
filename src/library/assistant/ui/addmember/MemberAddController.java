@@ -16,6 +16,7 @@ import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.listmember.MemberListController;
 import library.assistant.ui.listmember.MemberListController.Member;
+import org.apache.commons.lang3.StringUtils;
 
 public class MemberAddController implements Initializable {
 
@@ -53,10 +54,10 @@ public class MemberAddController implements Initializable {
 
     @FXML
     private void addMember(ActionEvent event) {
-        String mName = name.getText();
-        String mID = id.getText();
-        String mMobile = mobile.getText();
-        String mEmail = email.getText();
+        String mName = StringUtils.trimToEmpty(name.getText());
+        String mID = StringUtils.trimToEmpty(id.getText());
+        String mMobile = StringUtils.trimToEmpty(mobile.getText());
+        String mEmail = StringUtils.trimToEmpty(email.getText());
 
         Boolean flag = mName.isEmpty() || mID.isEmpty() || mMobile.isEmpty() || mEmail.isEmpty();
         if (flag) {

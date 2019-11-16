@@ -91,6 +91,7 @@
 .settings-tab .tab-header-background{
     -fx-background-color: derive(-fx-primary, -50%);
 }
+
 /*Menu bar Styling*/
 .menu-bar{
     -fx-font-size: 14;
@@ -98,9 +99,10 @@
     -fx-background-color: -fx-primary;
 }
 
-.context-menu
-{
+.context-menu {
     -fx-background-color:  derive(-fx-primary, 20%);
+    -fx-font-size: 14;
+    -fx-min-width: 150px;
 }
 
 /*Hamburger Styling*/
@@ -347,4 +349,15 @@
     -fx-font-size: 18px;
     -fx-font-style: italic;
     -fx-fill: -fx-primary;
+}
+
+/* Context menu */
+
+.colored-context-menu .menu-item:focused {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: black;
+}
+
+.colored-context-menu .menu-item:focused .label {
+    -fx-text-fill: black;
 }

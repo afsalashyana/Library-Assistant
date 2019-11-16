@@ -1,6 +1,5 @@
 package library.assistant.ui.main;
 
-import com.jfoenix.controls.JFXDecorator;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;

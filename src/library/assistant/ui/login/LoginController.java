@@ -16,6 +16,7 @@ import javafx.stage.StageStyle;
 import library.assistant.ui.settings.Preferences;
 import library.assistant.util.LibraryAssistantUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +39,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleLoginButtonAction(ActionEvent event) {
-        String uname = username.getText();
+        String uname = StringUtils.trimToEmpty(username.getText());
         String pword = DigestUtils.shaHex(password.getText());
 
         if (uname.equals(preference.getUsername()) && pword.equals(preference.getPassword())) {

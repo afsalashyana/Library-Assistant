@@ -20,6 +20,7 @@ import library.assistant.data.model.Book;
 import library.assistant.database.DataHelper;
 import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.listbook.BookListController;
+import org.apache.commons.lang3.StringUtils;
 
 public class BookAddController implements Initializable {
 
@@ -50,10 +51,10 @@ public class BookAddController implements Initializable {
 
     @FXML
     private void addBook(ActionEvent event) {
-        String bookID = id.getText();
-        String bookAuthor = author.getText();
-        String bookName = title.getText();
-        String bookPublisher = publisher.getText();
+        String bookID = StringUtils.trimToEmpty(id.getText());
+        String bookAuthor = StringUtils.trimToEmpty(author.getText());
+        String bookName = StringUtils.trimToEmpty(title.getText());
+        String bookPublisher = StringUtils.trimToEmpty(publisher.getText());
 
         if (bookID.isEmpty() || bookAuthor.isEmpty() || bookName.isEmpty()) {
             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Insufficient Data", "Please enter data in all fields.");
