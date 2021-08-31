@@ -231,6 +231,8 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#handleMenuAddBook" text="Add Book" />
                         <MenuItem mnemonicParsing="false" onAction="#handleMenuAddMember" text="Add Member" />
+                             <MenuItem mnemonicParsing="false" onAction="#handleMenuAddBookFromCSV" text="Import Books from Excel" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleMenuAddMemberFromCSV" text="Import Members from Excel" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="View">

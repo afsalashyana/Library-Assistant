@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.addmember.MemberAddController">
+   <children>
+      <AnchorPane id="AnchorPane" fx:id="mainContainer" prefHeight="376.0" prefWidth="490.0" styleClass="custom-pane" stylesheets="@../../../../resources/dark-theme.css">
+         <children>
+            <VBox prefHeight="153.0" prefWidth="404.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <JFXTextField fx:id="location" labelFloat="true" promptText="Excel File Location">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                 <JFXButton fx:id="selectButton" layoutX="10.0" layoutY="10.0" onAction="#selectMemberFile" prefHeight="66.0" prefWidth="100.0" text="Select file" />
+                  <HBox alignment="CENTER" prefHeight="47.0" prefWidth="404.0" spacing="30.0">
+                     <children>
+                        <JFXButton fx:id="saveButton" onAction="#addMemberFromCSV" prefHeight="66.0"  text="Import Members from Excel file" />
+                        
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>
