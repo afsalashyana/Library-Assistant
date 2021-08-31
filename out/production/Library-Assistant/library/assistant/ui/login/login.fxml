@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="419.0" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.login.LoginController">
+   <children>
+      <JFXTextField fx:id="username" labelFloat="true" layoutX="95.0" layoutY="122.0" prefHeight="33.0" prefWidth="259.0" promptText="Username">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </JFXTextField>
+      <JFXPasswordField fx:id="password" labelFloat="true" layoutX="97.0" layoutY="194.0" onAction="#handleLoginButtonAction" prefHeight="34.0" prefWidth="259.0" promptText="Password">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXButton layoutX="106.0" layoutY="278.0" onAction="#handleLoginButtonAction" prefHeight="40.0" prefWidth="90.0" styleClass="login-button" text="Login" />
+      <JFXButton layoutX="239.0" layoutY="278.0" onAction="#handleCancelButtonAction" prefHeight="40.0" prefWidth="90.0" styleClass="login-button" text="Cancel" />
+      <FontAwesomeIconView glyphName="LOCK" layoutX="200.0" layoutY="79.0" size="55" />
+      <FontAwesomeIconView glyphName="USER" layoutX="64.0" layoutY="149.0" size="25" />
+      <FontAwesomeIconView glyphName="KEY" layoutX="64.0" layoutY="224.0" size="25" />
+   </children>
+</AnchorPane>

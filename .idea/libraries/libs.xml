@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/commons-csv-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/boxable-1.5-RC.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-codec-1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/javax.mail-1.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/log4j-core-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/fontawesomefx-commons-8.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-logging-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/log4j-api-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/fontbox-2.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/pdfbox-2.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/jfoenix-8.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-lang3-3.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/gson-2.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/guava-21.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-simple-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-api-1.7.25.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/derbyclient.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/derby.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/fontawesomefx-fontawesome-4.7.0-5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

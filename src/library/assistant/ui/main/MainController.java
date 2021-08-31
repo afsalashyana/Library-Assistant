@@ -397,6 +397,16 @@ public class MainController implements Initializable, BookReturnCallback {
     private void handleMenuAddBook(ActionEvent event) {
         LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/addbook/add_book.fxml"), "Add New Book", null);
     }
+      @FXML
+    private void handleMenuAddBookFromCSV(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/addbook/add_book_from_csv.fxml"), "Import Books from Excel", null);
+    }
+    @FXML
+    private void handleMenuAddMemberFromCSV(ActionEvent event) {
+        LibraryAssistantUtil.loadWindow(getClass().getResource("/library/assistant/ui/addmember/member_add_from_csv.fxml"), "Import Members from Excel", null);
+    }
+    
+    
 
     @FXML
     private void handleMenuAddMember(ActionEvent event) {
