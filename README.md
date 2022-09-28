@@ -2,7 +2,7 @@
 This is a library management software developed using JavaFX programming language. The entire development video with explanation of each and every part (in realtime) is available in my YouTube Channel [Genuine Coder Youtube Channel](https://www.youtube.com/playlist?list=PLhs1urmduZ29jTcE1ca8Z6bZNvH_39ayL).
   
 ### New Features
-* One-click database export
+* One-click DataBase Export
   <p align="center">
    <img src=https://i.imgur.com/ufZOqkn.png>
   </p>
