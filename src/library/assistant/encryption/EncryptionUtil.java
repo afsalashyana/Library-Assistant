@@ -5,11 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.crypto.Cipher;
@@ -117,11 +114,10 @@ public class EncryptionUtil {
         return data;
     }
 
-    private static byte[] prepareIV() throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-512");
-        String randomVal = String.valueOf(new Random(System.currentTimeMillis()).nextLong());
-        byte[] hash = digest.digest(randomVal.getBytes(StandardCharsets.UTF_8));
-        return Arrays.copyOfRange(hash, 0, 16);
+    private static byte[] prepareIV() {
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+        return iv;
     }
 
     private static void writeKey(CipherSpec spec) throws Exception {
