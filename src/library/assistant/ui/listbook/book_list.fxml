@@ -43,6 +43,7 @@
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#exportAsCSV" text="Export as CSV" />
                         <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Export as PDF" />
                         <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Close" />
                      </items>

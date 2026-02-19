@@ -33,6 +33,8 @@ public class LibraryAssistantUtil {
     public static final String MAIL_CONTENT_LOC = "/resources/mail_content.html";
     private static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yyyy");
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
     public static void setStageIcon(Stage stage) {
         stage.getIcons().add(new Image(ICON_IMAGE_LOC));
@@ -106,10 +108,7 @@ public class LibraryAssistantUtil {
     }
 
     public static boolean validateEmailAddress(String emailID) {
-        String regex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(regex);
-        return pattern.matcher(emailID).matches();
+        return EMAIL_PATTERN.matcher(emailID).matches();
     }
 
     public static void openFileWithDesktop(File file) {

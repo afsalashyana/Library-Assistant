@@ -163,6 +163,11 @@ public class BookListController implements Initializable {
     }
 
     @FXML
+    private void exportAsCSV(ActionEvent event) {
+        library.assistant.util.ExportUtils.writeToCSV(tableView, getStage());
+    }
+
+    @FXML
     private void exportAsPDF(ActionEvent event) {
         List<List> printData = new ArrayList<>();
         String[] headers = {"   Title   ", "ID", "  Author  ", "  Publisher ", "Avail"};

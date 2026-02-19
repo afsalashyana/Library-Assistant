@@ -6,7 +6,6 @@
 package library.assistant.ui.addmember;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,8 +24,4 @@ public class MemberAddLoader extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
 }

@@ -1,7 +1,6 @@
 package library.assistant.ui.notifoverdue;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,10 +16,6 @@ public class OverdueNotificationLoader extends Application {
 
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }

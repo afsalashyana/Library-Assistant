@@ -65,6 +65,11 @@ public class MemberAddController implements Initializable {
             return;
         }
 
+        if (!isValidEmail(mEmail)) {
+             AlertMaker.showMaterialDialog(rootPane, mainContainer, new ArrayList<>(), "Invalid Email", "Please enter a valid email address.");
+             return;
+        }
+
         if (isInEditMode) {
             handleUpdateMember();
             return;
@@ -111,4 +116,8 @@ public class MemberAddController implements Initializable {
         }
     }
 
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
 }

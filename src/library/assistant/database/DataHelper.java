@@ -1,5 +1,6 @@
 package library.assistant.database;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,8 +21,12 @@ public class DataHelper {
     private final static Logger LOGGER = LogManager.getLogger(DatabaseHandler.class.getName());
 
     public static boolean insertNewBook(Book book) {
+        return insertNewBook(book, DatabaseHandler.getInstance().getConnection());
+    }
+
+    public static boolean insertNewBook(Book book, Connection conn) {
         try {
-            PreparedStatement statement = DatabaseHandler.getInstance().getConnection().prepareStatement(
+            PreparedStatement statement = conn.prepareStatement(
                     "INSERT INTO BOOK(id,title,author,publisher,isAvail) VALUES(?,?,?,?,?)");
             statement.setString(1, book.getId());
             statement.setString(2, book.getTitle());

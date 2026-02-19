@@ -1,7 +1,12 @@
 # Material Design Library Management Software using JavaFX
 This is a library management software developed using JavaFX programming language. The entire development video with explanation of each and every part (in realtime) is available in my YouTube Channel [Genuine Coder Youtube Channel](https://www.youtube.com/playlist?list=PLhs1urmduZ29jTcE1ca8Z6bZNvH_39ayL).
   
-### New Features
+### New Features (v1.1.0)
+* **Data Export**: Export Book and Member lists to CSV format for easy reporting.
+* **Email Validation**: Enhanced validation for member email addresses during registration.
+* **Release Automation**: One-click packaging using `package_app.ps1`.
+
+### Previous Features
 * One-click database export
   <p align="center">
    <img src=https://i.imgur.com/ufZOqkn.png>
@@ -18,6 +23,26 @@ This is a library management software developed using JavaFX programming languag
    <p align="center">
     <img src=https://i.imgur.com/WrWZqLr.png>
    </p>
+
+### Getting Started
+
+#### Prerequisites
+* Java 8 (JDK 1.8)
+* Maven (optional, for dependency management if not using included libs)
+
+#### Running the Application
+To run the application locally:
+```powershell
+.\run_app.ps1
+```
+
+#### Building from Source
+To create a release package (ZIP with JAR and dependencies):
+```powershell
+.\package_app.ps1
+```
+The output will be available in the `dist` folder.
+
 ### Default Login Credentials
 | Username  | Password |
 | ------------- | ------------- |
@@ -26,7 +51,7 @@ This is a library management software developed using JavaFX programming languag
 ### Libraries Used
   * [JFoenix](https://github.com/jfoenixadmin/JFoenix) - JavaFX Material Design Library
   * [Apache Derby](https://db.apache.org/derby/) - Standalone Relational database
-  * [Apache Commons](https://commons.apache.org/) - For creating SHA hash
+  * [Apache Commons](https://commons.apache.org/) - For creating SHA hash and CSV Export
   * [GSon](https://github.com/google/gson) - JSON Library. Used for storing configuration
   * [FontawesomeFX](https://bitbucket.org/Jerady/fontawesomefx) - Icon library
   * [Apache PDFBox](https://pdfbox.apache.org/) - PDF Export
