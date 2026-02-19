@@ -35,10 +35,15 @@ import library.assistant.ui.addbook.BookAddController;
 import library.assistant.ui.addmember.MemberAddController;
 import library.assistant.ui.main.MainController;
 import library.assistant.util.LibraryAssistantUtil;
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 public class MemberListController implements Initializable {
 
     ObservableList<Member> list = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField searchField;
 
     @FXML
     private TableView<Member> tableView;
@@ -59,6 +64,36 @@ public class MemberListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
         loadData();
+        initSearch();
+    }
+
+    private void initSearch() {
+        FilteredList<Member> filteredData = new FilteredList<>(list, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(member -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (member.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (member.getId().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (member.getMobile().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (member.getEmail().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        SortedList<Member> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 
     private void initCol() {
@@ -92,7 +127,7 @@ public class MemberListController implements Initializable {
             Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        tableView.setItems(list);
+        // tableView.setItems(list); // Removed to allow SortedList binding
     }
 
     @FXML
@@ -157,6 +192,11 @@ public class MemberListController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @FXML
+    private void exportAsCSV(ActionEvent event) {
+        library.assistant.util.ExportUtils.writeToCSV(tableView, getStage());
     }
 
     @FXML

@@ -34,10 +34,15 @@ import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.addbook.BookAddController;
 import library.assistant.ui.main.MainController;
 import library.assistant.util.LibraryAssistantUtil;
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 public class BookListController implements Initializable {
 
     ObservableList<Book> list = FXCollections.observableArrayList();
+    @FXML
+    private JFXTextField searchField;
 
     @FXML
     private StackPane rootPane;
@@ -60,6 +65,36 @@ public class BookListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
         loadData();
+        initSearch();
+    }
+
+    private void initSearch() {
+        FilteredList<Book> filteredData = new FilteredList<>(list, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(book -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (book.getId().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (book.getAuthor().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (book.getPublisher().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        SortedList<Book> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 
     private Stage getStage() {
@@ -95,7 +130,7 @@ public class BookListController implements Initializable {
             Logger.getLogger(BookAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        tableView.setItems(list);
+        // tableView.setItems(list); // Removed to allow SortedList binding
     }
 
     @FXML
@@ -160,6 +195,11 @@ public class BookListController implements Initializable {
     @FXML
     private void handleRefresh(ActionEvent event) {
         loadData();
+    }
+
+    @FXML
+    private void exportAsCSV(ActionEvent event) {
+        library.assistant.util.ExportUtils.writeToCSV(tableView, getStage());
     }
 
     @FXML

@@ -28,6 +28,9 @@ import library.assistant.database.DatabaseHandler;
 import library.assistant.ui.settings.Preferences;
 import library.assistant.ui.callback.BookReturnCallback;
 import library.assistant.util.LibraryAssistantUtil;
+import com.jfoenix.controls.JFXTextField;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 
 /*
  * @author afsal villan
@@ -36,6 +39,9 @@ public class IssuedListController implements Initializable {
 
     private ObservableList<IssueInfo> list = FXCollections.observableArrayList();
     private BookReturnCallback callback;
+
+    @FXML
+    private JFXTextField searchField;
 
     @FXML
     private TableView<IssueInfo> tableView;
@@ -62,6 +68,34 @@ public class IssuedListController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         initCol();
         loadData();
+        initSearch();
+    }
+
+    private void initSearch() {
+        FilteredList<IssueInfo> filteredData = new FilteredList<>(list, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(issue -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (issue.getBookName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (issue.getBookID().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (issue.getHolderName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        SortedList<IssueInfo> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 
     private void initCol() {
@@ -72,7 +106,7 @@ public class IssuedListController implements Initializable {
         issueCol.setCellValueFactory(new PropertyValueFactory<>("dateOfIssue"));
         daysCol.setCellValueFactory(new PropertyValueFactory<>("days"));
         fineCol.setCellValueFactory(new PropertyValueFactory<>("fine"));
-        tableView.setItems(list);
+        // tableView.setItems(list);
     }
 
     public void setBookReturnCallback(BookReturnCallback callback) {

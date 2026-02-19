@@ -42,6 +42,7 @@
                                                    <children>
                                                       <FontAwesomeIconView glyphName="BOOK" size="30" />
                                                       <JFXTextField fx:id="bookIDInput" labelFloat="true" onAction="#loadBookInfo" prefHeight="26.0" prefWidth="230.0" promptText="Book ID" />
+                                                      <JFXTextField fx:id="bookNameInput" labelFloat="true" onAction="#loadBookInfoByName" prefHeight="26.0" prefWidth="230.0" promptText="Book Name (Optional)" />
                                                    </children>
                                                 </VBox>
                                                 <StackPane fx:id="bookInfoContainer">
@@ -84,6 +85,7 @@
                                                    <children>
                                                       <FontAwesomeIconView glyphName="USER" size="30" />
                                                       <JFXTextField fx:id="memberIDInput" labelFloat="true" onAction="#loadMemberInfo" prefWidth="230.0" promptText="Member ID" />
+                                                      <JFXTextField fx:id="memberNameInput" labelFloat="true" onAction="#loadMemberInfoByName" prefWidth="230.0" promptText="Member Name (Optional)" />
                                                    </children>
                                                 </VBox>
                                                 <StackPane fx:id="memberInfoContainer">
@@ -216,7 +218,6 @@
                         </Tab>
                      </tabs>
                   </JFXTabPane>
-                  <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="75.0" />
                </children>
             </AnchorPane>
             <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -243,7 +244,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Notify">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleMenuOverdueNotification" text="Overdue Notification" />
+                        <MenuItem fx:id="notifyMenuItem" mnemonicParsing="false" onAction="#handleMenuOverdueNotification" text="Overdue Notification" />
                      </items>
                   </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -253,6 +254,7 @@
                 </Menu>
               </menus>
             </MenuBar>
+            <JFXHamburger fx:id="hamburger" styleClass="jfx-hamburger-icon" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="75.0" />
          </children>
       </AnchorPane>
    </children>

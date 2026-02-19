@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import com.jfoenix.controls.JFXTextField?>
 
 <StackPane fx:id="rootPane" stylesheets="@../../../../resources/dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.assistant.ui.listbook.BookListController">
    <children>
@@ -43,12 +44,14 @@
                <menus>
                   <Menu mnemonicParsing="false" text="File">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#exportAsCSV" text="Export as CSV" />
                         <MenuItem mnemonicParsing="false" onAction="#exportAsPDF" text="Export as PDF" />
                         <MenuItem mnemonicParsing="false" onAction="#closeStage" text="Close" />
                      </items>
                   </Menu>
                </menus>
             </MenuBar>
+            <JFXTextField fx:id="searchField" labelFloat="true" layoutX="605.0" layoutY="3.0" prefHeight="25.0" prefWidth="179.0" promptText="Search..." AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
          </children>
       </AnchorPane>
    </children>

@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
-X-COMMENT: Main-Class will be added automatically by build
+Main-Class: library.assistant.ui.main.Main
+Class-Path: libs/boxable-1.5-RC.jar libs/commons-codec-1.11.jar libs/commons-csv-1.4.jar libs/commons-lang3-3.9.jar libs/commons-logging-1.2.jar libs/derby.jar libs/derbyclient.jar libs/fontawesomefx-commons-8.15.jar libs/fontawesomefx-fontawesome-4.7.0-5.jar libs/fontbox-2.0.4.jar libs/gson-2.8.1.jar libs/guava-21.0.jar libs/javax.mail-1.6.1.jar libs/jfoenix-8.0.4.jar libs/log4j-api-2.11.0.jar libs/log4j-core-2.11.0.jar libs/pdfbox-2.0.3.jar libs/slf4j-api-1.7.25.jar libs/slf4j-simple-1.7.25.jar
 
