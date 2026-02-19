@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+import javafx.concurrent.Task;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -81,31 +82,45 @@ public class IssuedListController implements Initializable {
 
     private void loadData() {
         list.clear();
-        DatabaseHandler handler = DatabaseHandler.getInstance();
-        String qu = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, MEMBER.name, BOOK.title FROM ISSUE\n"
-                + "LEFT OUTER JOIN MEMBER\n"
-                + "ON MEMBER.id = ISSUE.memberID\n"
-                + "LEFT OUTER JOIN BOOK\n"
-                + "ON BOOK.id = ISSUE.bookID";
-        ResultSet rs = handler.execQuery(qu);
-        Preferences pref = Preferences.getPreferences();
-        try {
-            int counter = 0;
-            while (rs.next()) {
-                counter += 1;
-                String memberName = rs.getString("name");
-                String bookID = rs.getString("bookID");
-                String bookTitle = rs.getString("title");
-                Timestamp issueTime = rs.getTimestamp("issueTime");
-                System.out.println("Issued on " + issueTime);
-                Integer days = Math.toIntExact(TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - issueTime.getTime())) + 1;
-                Float fine = LibraryAssistantUtil.getFineAmount(days);
-                IssueInfo issueInfo = new IssueInfo(counter, bookID, bookTitle, memberName, LibraryAssistantUtil.formatDateTimeString(new Date(issueTime.getTime())), days, fine);
-                list.add(issueInfo);
+
+        Task<List<IssueInfo>> task = new Task<List<IssueInfo>>() {
+            @Override
+            protected List<IssueInfo> call() throws Exception {
+                List<IssueInfo> tempList = new ArrayList<>();
+                DatabaseHandler handler = DatabaseHandler.getInstance();
+                String qu = "SELECT ISSUE.bookID, ISSUE.memberID, ISSUE.issueTime, MEMBER.name, BOOK.title FROM ISSUE\n"
+                        + "LEFT OUTER JOIN MEMBER\n"
+                        + "ON MEMBER.id = ISSUE.memberID\n"
+                        + "LEFT OUTER JOIN BOOK\n"
+                        + "ON BOOK.id = ISSUE.bookID";
+                ResultSet rs = handler.execQuery(qu);
+                Preferences pref = Preferences.getPreferences();
+                try {
+                    int counter = 0;
+                    while (rs.next()) {
+                        counter += 1;
+                        String memberName = rs.getString("name");
+                        String bookID = rs.getString("bookID");
+                        String bookTitle = rs.getString("title");
+                        Timestamp issueTime = rs.getTimestamp("issueTime");
+                        System.out.println("Issued on " + issueTime);
+                        Integer days = Math.toIntExact(TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - issueTime.getTime())) + 1;
+                        Float fine = LibraryAssistantUtil.getFineAmount(days, pref);
+                        IssueInfo issueInfo = new IssueInfo(counter, bookID, bookTitle, memberName, LibraryAssistantUtil.formatDateTimeString(new Date(issueTime.getTime())), days, fine);
+                        tempList.add(issueInfo);
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                return tempList;
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        };
+
+        task.setOnSucceeded(event -> {
+            list.setAll(task.getValue());
+        });
+
+        new Thread(task).start();
     }
 
     @FXML

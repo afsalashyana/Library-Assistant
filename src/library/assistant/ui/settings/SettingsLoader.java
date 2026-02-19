@@ -1,7 +1,6 @@
 package library.assistant.ui.settings;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,10 +22,6 @@ public class SettingsLoader extends Application {
         new Thread(() -> {
             DatabaseHandler.getInstance();
         }).start();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 
 }
